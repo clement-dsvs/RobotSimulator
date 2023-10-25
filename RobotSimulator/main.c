@@ -21,14 +21,22 @@ int main(void)
 
 	if (!IsWindowState(FLAG_VSYNC_HINT)) SetTargetFPS(60);
 
+	Camera3D camera;
+    camera.position = (Vector3){ .0f, 10.0f, 10.0f }; // Camera position
+    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+
+    Vector3 cubePosition = { 0.0f, 1.0f, 0.0f };
 	RenderTexture screen = LoadRenderTexture(screenWidth - 215, screenHeight - 10);
-	Rectangle screenRect = {0, 0, screen.texture.width, screen.texture.height};
+	Rectangle screenRect = {0, 0, screen.texture.width, -screen.texture.height};
 
 	ObstacleList list_obstacles = {0, 0};
 	Robot robot = {(Vector2){600, 300}, 15, 180, GREEN, &list_obstacles, true, 100};
 	robot.environment = &list_obstacles;
-	AddObstacle(&list_obstacles, (Obstacle){(Vector2){0, 0}, (Vector2){50, 50}, false, PURPLE});
-	AddObstacle(&list_obstacles, (Obstacle){(Vector2){screenRect.width-50, screenRect.height-50}, (Vector2){50, 50}, false, BLUE});
+	//AddObstacle(&list_obstacles, (Obstacle){(Vector2){0, 0}, (Vector2){50, 50}, false, PURPLE});
+	//AddObstacle(&list_obstacles, (Obstacle){(Vector2){screenRect.width-50, screenRect.height-50}, (Vector2){50, 50}, false, BLUE});
 
 	Menu menu = {
 		true, false, 0, &list_obstacles.edit_mode, false, false, false, false, (Vector2){5, 5}, (Vector2){10, 35},
@@ -58,28 +66,31 @@ int main(void)
 			}
 		}
 
-		//UpdateRobot(&robot, delta);
+		//UpdateCamera(&camera, CAMERA_THIRD_PERSON);
 
-		// Draw
+		//UpdateRobot(&robot, delta);
 
 		BeginTextureMode(screen);
 		{
 			ClearBackground(RAYWHITE);
-			// Draw Obstacles
-			for (int i = 0; i < list_obstacles.size; i++)
+			BeginMode3D(camera);
 			{
-				DrawObstacle(&list_obstacles.obstacles[i]);
-			}
 
-			DrawRobot(&robot);
+				DrawLine3D((Vector3){-2, 0, -2}, (Vector3){1, 0, 1}, GREEN);
+				DrawCube(cubePosition, 2.f, 2.f, 2.f, RED);
+				DrawGrid(10, .5f);
+			}
+			EndMode3D();
 		}
 		EndTextureMode();
 
+		// Draw
 		BeginDrawing();
 		{
 			ClearBackground(BLACK);
 
 			DrawMenu(&menu);
+			
 
 			DrawTextureRec(screen.texture, screenRect, (Vector2){210, 5}, WHITE);
 		}
@@ -87,6 +98,9 @@ int main(void)
 	}
 
 	// De-Initialization
+
+	UnloadRenderTexture(screen);
+
 	CloseWindow();
 	free(list_obstacles.obstacles);
 
