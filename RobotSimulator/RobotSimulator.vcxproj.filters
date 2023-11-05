@@ -13,9 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="rlImGui">
+      <UniqueIdentifier>{f854c45a-c6a1-406c-9834-423e229058ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="robot.c">
@@ -27,14 +30,14 @@
     <ClCompile Include="obstacles.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="menu.c">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="map.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="dialogs.c">
+    <ClCompile Include="dialogs.cpp">
       <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\rlImGui\rlImGui.cpp">
+      <Filter>rlImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,14 +50,20 @@
     <ClInclude Include="obstacles.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="menu.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="map.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="dialogs.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rlImGui\imgui_impl_raylib.h">
+      <Filter>rlImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rlImGui\rlImGui.h">
+      <Filter>rlImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\rlImGui\rlImGuiColors.h">
+      <Filter>rlImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

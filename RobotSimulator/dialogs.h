@@ -1,5 +1,10 @@
 #pragma once
 
-char* OpenExportDialog();
-
-char* OpenImportDialog();
+#ifdef __cplusplus
+extern "C" {
+#endif
+	char* OpenImportDialog();
+	char* OpenExportDialog();
+#ifdef __cplusplus
+}
+#endif
