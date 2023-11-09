@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 
+#include "Map.h"
+
 int main(int argc, char* argv[])
 {
 	// Initialization
@@ -23,20 +25,21 @@ int main(int argc, char* argv[])
 	rlImGuiSetup(true);
 
 	Camera3D camera;
-    camera.position = Vector3{ 0.0f, 10.0f, 10.0f };  // Camera position
-    camera.target = Vector3{ 0.0f, 0.0f, 0.0f };      // Camera looking at point
-    camera.up = Vector3{ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    camera.fovy = 45.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
-	bool open = true;
+    camera.position = Vector3{ 0.0f, 10.0f, 10.0f };	// Camera position
+    camera.target = Vector3{ 0.0f, 0.0f, 0.0f };		// Camera looking at point
+    camera.up = Vector3{ 0.0f, 1.0f, 0.0f };			// Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;										// Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;						// Camera mode type
+
+	Map map;
+	map.setSize(Vector2{ 10, 10 });
 
 	// Main loop
 	while (!WindowShouldClose())
 	{
-		//UpdateCamera(&camera, CAMERA_ORBITAL);
-		float mouseWheelMovement = GetMouseWheelMove();
-
-
+		const float mouseWheelMovement = GetMouseWheelMove();
+		Vector3 mouse = Vector3Normalize(Vector3Subtract(camera.target, camera.position));
+		camera.position = Vector3Add(camera.position, Vector3Scale(mouse, mouseWheelMovement));
 		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
@@ -57,7 +60,7 @@ int main(int argc, char* argv[])
 				{
 					if (ImGui::MenuItem("Nouveau"))
 					{
-						
+						// Initialiser nouvelle carte
 					}
 
 					if (ImGui::MenuItem("Ouvrir"))
@@ -65,14 +68,28 @@ int main(int argc, char* argv[])
 						char* fileName = OpenImportDialog();
 						if (fileName != nullptr)
 						{
-							std:: cout << fileName << std::endl;
+							std::cout << fileName << std::endl;
 							free(fileName);
 						}
 					}
 
 					if (ImGui::MenuItem("Enregistrer"))
 					{
-
+						if (map.getFilePath())
+						{
+							map.toJSON(map.getFilePath());
+						}
+						else
+						{
+							// TODO: remplacer par méthode "enregistrer-sous"
+							char* fileName = OpenExportDialog();
+							if (fileName != nullptr)
+							{
+								std::cout << fileName << std::endl;
+								map.toJSON(fileName);
+								free(fileName);
+							}
+						}
 					}
 					
 					if(ImGui::MenuItem("Enregistrer Sous"))
@@ -80,7 +97,8 @@ int main(int argc, char* argv[])
 						char* fileName = OpenExportDialog();
 						if (fileName != nullptr)
 						{
-							std:: cout << fileName << std::endl;
+							std::cout << fileName << std::endl;
+							map.toJSON(fileName);
 							free(fileName);
 						}
 					}
@@ -108,11 +126,6 @@ int main(int argc, char* argv[])
 			}
 		}
 		ImGui::End();
-		if (open)
-		{
-			ImGui::Begin("test", &open);
-			ImGui::End();
-		}
 
 		// end ImGui Content
 		rlImGuiEnd();

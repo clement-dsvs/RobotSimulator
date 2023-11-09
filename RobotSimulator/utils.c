@@ -1,7 +1,5 @@
 #include "utils.h"
 
-#include "obstacles.h"
-
 #include <stdlib.h>
 #include <raylib.h>
 #include <raymath.h>
@@ -12,22 +10,7 @@ float clamp(float min, float max, float value)
 	return t > max ? max : t;
 }
 
-int GetNearestPointIndex(Vector2 origin, Vector2* points, int nbPoints)
-{
-	float min_distance = HUGE_VALF;
-	int min_index = -1;
-	for (int i = 0; i < nbPoints; i++)
-	{
-		float distance = Vector2Distance(origin, points[i]);
-		if (distance < min_distance)
-		{
-			min_distance = distance;
-			min_index = i;
-		}
-	}
-	return min_index;
-}
-
+/*
 bool CheckCollisionRayObstacle(Vector2 origin, Vector2 ray, Obstacle obstacle, Vector2* result)
 {
 	Vector2 end = (Vector2){ray.x, ray.y};
@@ -69,3 +52,5 @@ bool CheckCollisionRayObstacle(Vector2 origin, Vector2 ray, Obstacle obstacle, V
 
 	return nbCollisions > 0;
 }
+ *
+*/
