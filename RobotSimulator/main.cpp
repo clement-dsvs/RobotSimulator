@@ -34,6 +34,8 @@ int main(int argc, char* argv[])
 	Map map;
 	map.setSize(Vector2{ 10, 10 });
 
+	bool l_afficherListeObstacles = false;
+
 	// Main loop
 	while (!WindowShouldClose())
 	{
@@ -51,49 +53,36 @@ int main(int argc, char* argv[])
 
 		// start ImGui Content
 		rlImGuiBegin();
-		
-		if (ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_MenuBar))
+
+		if (ImGui::BeginMainMenuBar())
 		{
-			if (ImGui::BeginMenuBar())
+			if (ImGui::BeginMenu("Fichier"))
 			{
-				if (ImGui::BeginMenu("Fichier"))
+				if (ImGui::MenuItem("Nouveau"))
 				{
-					if (ImGui::MenuItem("Nouveau"))
-					{
-						// Initialiser nouvelle carte
-					}
+					// Initialiser nouvelle carte
+				}
 
-					if (ImGui::MenuItem("Ouvrir"))
+				if (ImGui::MenuItem("Ouvrir"))
+				{
+					char* fileName = OpenImportDialog();
+					if (fileName != nullptr)
 					{
-						char* fileName = OpenImportDialog();
-						if (fileName != nullptr)
-						{
-							std::cout << fileName << std::endl;
-							free(fileName);
-						}
+						std::cout << fileName << std::endl;
+						map = Map::fromJSON(fileName);
+						free(fileName);
 					}
+				}
 
-					if (ImGui::MenuItem("Enregistrer"))
+				if (ImGui::MenuItem("Enregistrer"))
+				{
+					if (map.getFilePath())
 					{
-						if (map.getFilePath())
-						{
-							map.toJSON(map.getFilePath());
-						}
-						else
-						{
-							// TODO: remplacer par méthode "enregistrer-sous"
-							char* fileName = OpenExportDialog();
-							if (fileName != nullptr)
-							{
-								std::cout << fileName << std::endl;
-								map.toJSON(fileName);
-								free(fileName);
-							}
-						}
+						map.toJSON(map.getFilePath());
 					}
-					
-					if(ImGui::MenuItem("Enregistrer Sous"))
+					else
 					{
+						// TODO: remplacer par méthode "enregistrer-sous"
 						char* fileName = OpenExportDialog();
 						if (fileName != nullptr)
 						{
@@ -102,30 +91,70 @@ int main(int argc, char* argv[])
 							free(fileName);
 						}
 					}
-
-					ImGui::EndMenu();
+				}
+				
+				if(ImGui::MenuItem("Enregistrer Sous"))
+				{
+					char* fileName = OpenExportDialog();
+					if (fileName != nullptr)
+					{
+						std::cout << fileName << std::endl;
+						map.toJSON(fileName);
+						free(fileName);
+					}
 				}
 
-				if (ImGui::BeginMenu("Afficher"))
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Simulation"))
+			{
+				if (ImGui::MenuItem("Commencer"))
 				{
-					if (ImGui::BeginMenu("Projection"))
+					
+				}
+
+				if (ImGui::MenuItem("Arreter"))
+				{
+					
+				}
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Afficher"))
+			{
+				if (ImGui::BeginMenu("Projection"))
+				{
+					if (ImGui::MenuItem("Perspective", nullptr, (camera.projection == CAMERA_PERSPECTIVE)))
 					{
-						if (ImGui::MenuItem("Perspective"))
-						{
-							camera.projection = CAMERA_PERSPECTIVE;
-						}
-						if (ImGui::MenuItem("Orthographique"))
-						{
-							camera.projection = CAMERA_ORTHOGRAPHIC;
-						}
-						ImGui::EndMenu();
+						camera.projection = CAMERA_PERSPECTIVE;
+					}
+					if (ImGui::MenuItem("Orthographique", nullptr, (camera.projection == CAMERA_ORTHOGRAPHIC)))
+					{
+						camera.projection = CAMERA_ORTHOGRAPHIC;
 					}
 					ImGui::EndMenu();
 				}
-				ImGui::EndMenuBar();
+
+				if (ImGui::MenuItem("Liste des obstacles", NULL, l_afficherListeObstacles))
+				{
+					l_afficherListeObstacles = !l_afficherListeObstacles;
+				}
+
+				ImGui::EndMenu();
 			}
+			ImGui::EndMainMenuBar();
 		}
-		ImGui::End();
+
+		if (l_afficherListeObstacles)
+		{
+			if (ImGui::Begin("Liste Obstacles", &l_afficherListeObstacles))
+			{
+				
+			}
+			ImGui::End();
+		}
 
 		// end ImGui Content
 		rlImGuiEnd();
