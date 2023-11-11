@@ -11,7 +11,7 @@ public:
 	Map();
 
 	static Map fromJSON(const char* a_FileName);
-	bool toJSON(const char* a_FileName);
+	bool toJSON(const char* a_FileName) const;
 
 	std::vector<Obstacle>* getObstacleList();
 	bool addObstacle(const Obstacle a_Obstacle);

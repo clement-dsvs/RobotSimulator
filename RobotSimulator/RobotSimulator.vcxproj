@@ -132,18 +132,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\rlImGui\rlImGui.cpp" />
-    <ClCompile Include="dialogs.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Dialogs.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\rlImGui\imgui_impl_raylib.h" />
     <ClInclude Include="..\rlImGui\rlImGui.h" />
     <ClInclude Include="..\rlImGui\rlImGuiColors.h" />
-    <ClInclude Include="dialogs.h" />
+    <ClInclude Include="Dialogs.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
