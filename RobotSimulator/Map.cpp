@@ -87,9 +87,9 @@ bool Map::toJSON(const char* a_FileName) const
 	return true;
 }
 
-std::vector<Obstacle>* Map::getObstacleList()
+std::vector<Obstacle>& Map::getObstacleList()
 {
-	return &this->m_ObstacleList;
+	return this->m_ObstacleList;
 }
 
 bool Map::addObstacle(const Obstacle a_Obstacle)
