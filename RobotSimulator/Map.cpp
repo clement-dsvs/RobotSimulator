@@ -3,19 +3,60 @@
 #include "utils.h"
 
 #include <fstream>
+#include <imgui.h>
 #include <sstream>
 #include <cjson/cJSON.h>
 
-Map::Map()
+Map::Map(Camera* a_camera)
 {
+	m_camera = a_camera;
+
 	m_FileName = "Nouveau.json";
 	m_FilePath = nullptr;
 	m_Size = Vector2{ 10, 10 };
 }
 
-Map Map::fromJSON(const char* a_FileName)
+void Map::o_update()
 {
-	Map l_Map;
+	ImGuiIO& io = ImGui::GetIO();
+	float l_nearestHit = HUGE_VALF;
+	Obstacle* l_selectedObstacle = nullptr;
+
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !io.WantCaptureMouse)
+	{
+		for (auto& l_Obstacle : m_ObstacleList)
+		{
+			RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_Obstacle.getModel().meshes[0], l_Obstacle.getModel().transform);
+
+			if (l_collision.hit && l_collision.distance < l_nearestHit)
+			{
+				if (l_selectedObstacle)
+				{
+					l_selectedObstacle->unselect();
+				}
+				l_selectedObstacle = &l_Obstacle;
+				l_Obstacle.select();
+				l_nearestHit = l_collision.distance;
+			}
+			else
+			{
+				l_Obstacle.unselect();
+			}
+		}
+	}
+}
+
+void Map::o_draw() const
+{
+	for (auto l_Obstacle : m_ObstacleList)
+	{
+		l_Obstacle.o_draw();
+	}
+}
+
+Map Map::fromJSON(const char* a_FileName, Camera* a_camera)
+{
+	Map l_Map(a_camera);
 
 	// Parse JSON
 	std::ifstream file(a_FileName);
@@ -106,7 +147,7 @@ bool Map::addObstacle(const Obstacle a_Obstacle)
 	}
 }
 
-Vector2 Map::getSize()
+Vector2& Map::getSize()
 {
 	return this->m_Size;
 }

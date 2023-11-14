@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="..\rlImGui\rlImGui.cpp" />
     <ClCompile Include="Dialogs.cpp" />
+    <ClCompile Include="IHM.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Obstacle.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="..\rlImGui\rlImGui.h" />
     <ClInclude Include="..\rlImGui\rlImGuiColors.h" />
     <ClInclude Include="Dialogs.h" />
+    <ClInclude Include="IHM.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Utils.h" />
