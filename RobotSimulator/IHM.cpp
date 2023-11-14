@@ -144,7 +144,7 @@ void IHM::o_draw()
 					{
 						if (ImGui::MenuItem("Cube"))
 						{
-							ObstacleCube l_nvObstacle = ObstacleCube(2, 2, 2);
+							Obstacle l_nvObstacle = Obstacle::GenCube(2, 2, 2);
 							m_map->addObstacle(l_nvObstacle);
 						}
 

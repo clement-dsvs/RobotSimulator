@@ -19,7 +19,9 @@ public:
 
 	static Obstacle fromJSON(cJSON* a_jsonObstacle);
 
-	void render() const;
+	static Obstacle GenCube(float a_width, float a_height, float a_length);
+
+	void o_draw() const;
 
 	void setMesh(const Mesh& a_Mesh);
 	const Mesh& getMesh();

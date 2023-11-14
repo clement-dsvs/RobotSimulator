@@ -25,7 +25,14 @@ Obstacle Obstacle::fromJSON(cJSON* a_jsonObstacle)
 	return l_Obstacle;
 }
 
-void Obstacle::render() const
+Obstacle Obstacle::GenCube(float a_width, float a_height, float a_length)
+{
+	Obstacle l_nvObstacle;
+	l_nvObstacle.setMesh(GenMeshCube(a_width, a_height, a_length));
+	return l_nvObstacle;
+}
+
+void Obstacle::o_draw() const
 {
 	DrawModel(m_Model, m_Position, 1, RED);
 	if (m_Selected)
