@@ -7,6 +7,8 @@
 #include <sstream>
 #include <cjson/cJSON.h>
 
+#include <raymath.h>
+
 Map::Map(Camera* a_camera)
 {
 	m_camera = a_camera;
@@ -18,15 +20,16 @@ Map::Map(Camera* a_camera)
 
 void Map::o_update()
 {
-	ImGuiIO& io = ImGui::GetIO();
-	float l_nearestHit = HUGE_VALF;
-	Obstacle* l_selectedObstacle = nullptr;
+	const ImGuiIO& io = ImGui::GetIO();
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !io.WantCaptureMouse)
 	{
-		for (auto& l_Obstacle : m_ObstacleList)
+		Obstacle* l_selectedObstacle = nullptr;
+		float l_nearestHit = HUGE_VALF;
+
+		for (auto& l_obstacle : m_ObstacleList)
 		{
-			RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_Obstacle.getModel().meshes[0], l_Obstacle.getModel().transform);
+			const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_obstacle.getMesh(), MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z));
 
 			if (l_collision.hit && l_collision.distance < l_nearestHit)
 			{
@@ -34,13 +37,13 @@ void Map::o_update()
 				{
 					l_selectedObstacle->unselect();
 				}
-				l_selectedObstacle = &l_Obstacle;
-				l_Obstacle.select();
+				l_selectedObstacle = &l_obstacle;
+				l_obstacle.select();
 				l_nearestHit = l_collision.distance;
 			}
 			else
 			{
-				l_Obstacle.unselect();
+				l_obstacle.unselect();
 			}
 		}
 	}
@@ -48,9 +51,9 @@ void Map::o_update()
 
 void Map::o_draw() const
 {
-	for (auto l_Obstacle : m_ObstacleList)
+	for (const auto& l_obstacle : m_ObstacleList)
 	{
-		l_Obstacle.o_draw();
+		l_obstacle.o_draw();
 	}
 }
 
