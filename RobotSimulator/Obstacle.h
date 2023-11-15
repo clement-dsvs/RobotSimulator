@@ -32,6 +32,8 @@ public:
 	void setPosition(const Vector3& a_Position);
 	void setPosition(const float a_x = 0, const float a_y = 0, const float a_z = 0);
 
+	ObstacleType getObstacleType();
+
 	void select() { m_Selected = true;}
 	void unselect() { m_Selected = false;}
 
@@ -44,6 +46,6 @@ private:
 
 	bool m_Selected;
 
-	ObstacleType m_ObstacleType;
+	ObstacleType m_ObstacleType = E_OBSTACLE_UNDEFINED;
 };
 

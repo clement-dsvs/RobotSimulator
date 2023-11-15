@@ -26,46 +26,34 @@ void IHM::o_draw()
 	}
 
 	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("Fichier"))
 		{
-			if (ImGui::BeginMenu("Fichier"))
+			if (ImGui::MenuItem("Nouveau"))
 			{
-				if (ImGui::MenuItem("Nouveau"))
-				{
-					*m_map = Map(m_camera);
-				}
+				*m_map = Map(m_camera);
+			}
 
-				if (ImGui::MenuItem("Ouvrir"))
+			if (ImGui::MenuItem("Ouvrir"))
+			{
+				char* fileName = OpenImportDialog();
+				if (fileName != nullptr)
 				{
-					char* fileName = OpenImportDialog();
-					if (fileName != nullptr)
-					{
-						std::cout << fileName << std::endl;
-						//m_map = Map::fromJSON(fileName);
-						free(fileName);
-					}
+					std::cout << fileName << std::endl;
+					//m_map = Map::fromJSON(fileName);
+					free(fileName);
 				}
+			}
 
-				if (ImGui::MenuItem("Enregistrer"))
+			if (ImGui::MenuItem("Enregistrer"))
+			{
+				if (m_map->getFilePath())
 				{
-					if (m_map->getFilePath())
-					{
-						m_map->toJSON(m_map->getFilePath());
-					}
-					else
-					{
-						// TODO: remplacer par méthode "enregistrer-sous"
-						char* fileName = OpenExportDialog();
-						if (fileName != nullptr)
-						{
-							std::cout << fileName << std::endl;
-							m_map->toJSON(fileName);
-							free(fileName);
-						}
-					}
+					m_map->toJSON(m_map->getFilePath());
 				}
-				
-				if(ImGui::MenuItem("Enregistrer Sous"))
+				else
 				{
+					// TODO: remplacer par méthode "enregistrer-sous"
 					char* fileName = OpenExportDialog();
 					if (fileName != nullptr)
 					{
@@ -74,115 +62,137 @@ void IHM::o_draw()
 						free(fileName);
 					}
 				}
+			}
 
+			if (ImGui::MenuItem("Enregistrer Sous"))
+			{
+				char* fileName = OpenExportDialog();
+				if (fileName != nullptr)
+				{
+					std::cout << fileName << std::endl;
+					m_map->toJSON(fileName);
+					free(fileName);
+				}
+			}
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Simulation"))
+		{
+			if (ImGui::MenuItem("Commencer"))
+			{
+
+			}
+
+			if (ImGui::MenuItem("Arreter"))
+			{
+
+			}
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Afficher"))
+		{
+			if (ImGui::BeginMenu("Projection"))
+			{
+				if (ImGui::MenuItem("Perspective", nullptr, (m_camera->projection == CAMERA_PERSPECTIVE)))
+				{
+					m_camera->projection = CAMERA_PERSPECTIVE;
+					m_camera->position = Vector3{ 0, 10.f, 10.f };
+				}
+				if (ImGui::MenuItem("Orthographique", nullptr, (m_camera->projection == CAMERA_ORTHOGRAPHIC)))
+				{
+					m_camera->projection = CAMERA_ORTHOGRAPHIC;
+					m_camera->position = Vector3{ 0, 10.f, .1f };
+				}
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("Simulation"))
+			if (ImGui::BeginMenu("Fenetres"))
 			{
-				if (ImGui::MenuItem("Commencer"))
+				if (ImGui::MenuItem("Liste des obstacles", NULL, m_afficherListeObstacles))
 				{
-					
+					m_afficherListeObstacles = !m_afficherListeObstacles;
 				}
 
-				if (ImGui::MenuItem("Arreter"))
+				if (ImGui::MenuItem("Editeur de carte"))
 				{
-					
+					m_afficherEditeurCarte = !m_afficherEditeurCarte;
 				}
-
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("Afficher"))
+			if (ImGui::MenuItem("FPS", nullptr, m_afficherFPS))
 			{
-				if (ImGui::BeginMenu("Projection"))
+				m_afficherFPS = !m_afficherFPS;
+			}
+
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
+	}
+
+	if (m_afficherListeObstacles)
+	{
+		if (ImGui::Begin("Liste Obstacles", &m_afficherListeObstacles, ImGuiWindowFlags_MenuBar))
+		{
+			if (ImGui::BeginMenuBar())
+			{
+				if (ImGui::BeginMenu("Ajouter"))
 				{
-					if (ImGui::MenuItem("Perspective", nullptr, (m_camera->projection == CAMERA_PERSPECTIVE)))
+					if (ImGui::MenuItem("Cube"))
 					{
-						m_camera->projection = CAMERA_PERSPECTIVE;
-						m_camera->position = Vector3 {0, 10.f, 10.f};
+						Obstacle l_nvObstacle = Obstacle::GenCube(2, 2, 2);
+						m_map->addObstacle(l_nvObstacle);
 					}
-					if (ImGui::MenuItem("Orthographique", nullptr, (m_camera->projection == CAMERA_ORTHOGRAPHIC)))
+
+					if (ImGui::MenuItem("Cylindre"))
 					{
-						m_camera->projection = CAMERA_ORTHOGRAPHIC;
-						m_camera->position = Vector3 {0, 10.f, .1f};
+
 					}
+
 					ImGui::EndMenu();
 				}
 
-				if (ImGui::BeginMenu("Fenetres"))
-				{
-					if (ImGui::MenuItem("Liste des obstacles", NULL, m_afficherListeObstacles))
-					{
-						m_afficherListeObstacles = !m_afficherListeObstacles;
-					}
-
-					if (ImGui::MenuItem("Editeur de carte"))
-					{
-						m_afficherEditeurCarte = !m_afficherEditeurCarte;
-					}
-					ImGui::EndMenu();
-				}
-
-				if (ImGui::MenuItem("FPS", nullptr, m_afficherFPS))
-				{
-					m_afficherFPS = !m_afficherFPS;
-				}
-
-				ImGui::EndMenu();
+				ImGui::EndMenuBar();
 			}
-			ImGui::EndMainMenuBar();
-		}
 
-		if (m_afficherListeObstacles)
-		{
-			if (ImGui::Begin("Liste Obstacles", &m_afficherListeObstacles, ImGuiWindowFlags_MenuBar))
+			int counter = 0;
+			for (auto& l_Obstacle : m_map->getObstacleList())
 			{
-				if (ImGui::BeginMenuBar())
-				{
-					if (ImGui::BeginMenu("Ajouter"))
-					{
-						if (ImGui::MenuItem("Cube"))
-						{
-							Obstacle l_nvObstacle = Obstacle::GenCube(2, 2, 2);
-							m_map->addObstacle(l_nvObstacle);
-						}
+				ImGui::Text("Cube");
 
-						if (ImGui::MenuItem("Cylindre"))
-						{
-							
-						}
+				char labelX[7];
+				char labelY[7];
+				char labelZ[7];
+				sprintf(labelX, "X##%d", counter);
+				sprintf(labelY, "Y##%d", counter);
+				sprintf(labelZ, "Z##%d", counter);
 
-						ImGui::EndMenu();
-					}
+				float step = .5f;
+				float fast_step = 1.f;
 
-					ImGui::EndMenuBar();
-				}
+				ImGui::InputScalar(labelX, ImGuiDataType_Float, &l_Obstacle.getPosition().x, &step, &fast_step);
+				ImGui::InputScalar(labelY, ImGuiDataType_Float, &l_Obstacle.getPosition().y, &step, &fast_step);
+				ImGui::InputScalar(labelZ, ImGuiDataType_Float, &l_Obstacle.getPosition().z, &step, &fast_step);
 
-				int counter = 0;
-				for (auto& l_Obstacle : m_map->getObstacleList())
-				{
-					ImGui::Text("Cube");
-					char labelX[7];
-					sprintf(labelX, "X##%d", counter);
-					ImGui::InputFloat(labelX, &l_Obstacle.getPosition().x);
-					ImGui::InputFloat("Y", &l_Obstacle.getPosition().y);
-					ImGui::InputFloat("Z", &l_Obstacle.getPosition().z);
-					counter++;
-				}
-
+				counter++;
 			}
-			ImGui::End();
-		}
 
-		if (m_afficherEditeurCarte)
+		}
+		ImGui::End();
+	}
+
+	if (m_afficherEditeurCarte)
+	{
+		if (ImGui::Begin("Editeur de carte", &m_afficherEditeurCarte))
 		{
-			if (ImGui::Begin("Editeur de carte", &m_afficherEditeurCarte))
-			{
-				ImGui::Text("Taille de la carte :");
-				ImGui::SliderFloat("X", &m_map->getSize().x, 1, 255, "%.0f");
-				ImGui::SliderFloat("Y", &m_map->getSize().y, 1, 255, "%.0f");
-			}
-			ImGui::End();
+			ImGui::Text("Taille de la carte :");
+			ImGui::SliderFloat("X", &m_map->getSize().x, 1, 255, "%.0f");
+			ImGui::SliderFloat("Y", &m_map->getSize().y, 1, 255, "%.0f");
 		}
+		ImGui::End();
+	}
 }

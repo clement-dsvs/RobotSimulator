@@ -1,12 +1,8 @@
 #include "raylib.h"
 #include "raymath.h"
 
-#include "imgui.h"
-#include "rlImGui.h"
+#include <rlImGui.h>
 
-#include "dialogs.h"
-
-#include <iostream>
 #include <string>
 
 #include "IHM.h"
