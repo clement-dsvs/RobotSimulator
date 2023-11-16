@@ -1,6 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include <string>
 #include <cjson/cJSON.h>
 
 enum ObstacleType
@@ -17,7 +18,7 @@ public:
 
 	cJSON* toJSON();
 
-	static Obstacle fromJSON(cJSON* a_jsonObstacle);
+	static Obstacle fromJSON(const cJSON* a_jsonObstacle);
 
 	static Obstacle GenCube(float a_width, float a_height, float a_length);
 
@@ -29,6 +30,8 @@ public:
 	const Model& getModel();
 	void setModel(const Model& a_model);
 
+	void setModelFileName(const char* a_fileName);
+
 	Vector3& getPosition() {return m_Position;}
 	void setPosition(const Vector3& a_Position);
 	void setPosition(const float a_x = 0, const float a_y = 0, const float a_z = 0);
@@ -38,9 +41,12 @@ public:
 	void select() { m_Selected = true;}
 	void unselect() { m_Selected = false;}
 
+	bool operator==(const Obstacle&) const;
+
 private:
 	Mesh m_Mesh;
 	Model m_Model;
+	std::string m_modelFileName;
 	Color m_Color;
 
 	Vector3 m_Position;

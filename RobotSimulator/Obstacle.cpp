@@ -4,6 +4,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "utils.h"
+
 Obstacle::Obstacle()
 {
 	this->m_Position = Vector3 {0, 0, 0};
@@ -13,29 +15,46 @@ Obstacle::Obstacle()
 
 cJSON* Obstacle::toJSON()
 {
-	return nullptr;
+	cJSON* l_jsonObject = cJSON_CreateObject();
+
+	cJSON_AddStringToObject(l_jsonObject, "Filename", m_modelFileName.c_str());
+
+	cJSON* l_jsonPosition = cJSON_AddObjectToObject(l_jsonObject, "Position");
+
+	cJSON_AddNumberToObject(l_jsonPosition, "X", m_Position.x);
+	cJSON_AddNumberToObject(l_jsonPosition, "Y", m_Position.y);
+	cJSON_AddNumberToObject(l_jsonPosition, "Z", m_Position.z);
+
+	return l_jsonObject;
 }
 
-Obstacle Obstacle::fromJSON(cJSON* a_jsonObstacle)
+Obstacle Obstacle::fromJSON(const cJSON* a_jsonObstacle)
 {
 	Obstacle l_Obstacle;
+	const cJSON* l_jsonObstacle = a_jsonObstacle;
 
-	//TODO: Parse JSON
+	cJSON* l_jsonFilename = getJSONChild(l_jsonObstacle, "Filename");
+	if (l_jsonFilename == nullptr) return l_Obstacle;
+
+	const char* l_modelFileName = cJSON_GetStringValue(l_jsonFilename);
+	Model l_model = LoadModel(l_modelFileName);
+	l_Obstacle.setModel(l_model);
+	l_Obstacle.setModelFileName(l_modelFileName);
+
+	cJSON* l_jsonPosition = getJSONChild(l_jsonObstacle, "Position");
+	cJSON* l_jsonX = getJSONChild(l_jsonPosition, "X");
+	cJSON* l_jsonY = getJSONChild(l_jsonPosition, "Y");
+	cJSON* l_jsonZ = getJSONChild(l_jsonPosition, "Z");
+	if (l_jsonX == nullptr || l_jsonY == nullptr || l_jsonZ == nullptr) return l_Obstacle;
+
+	l_Obstacle.setPosition(cJSON_GetNumberValue(l_jsonX), cJSON_GetNumberValue(l_jsonY), cJSON_GetNumberValue(l_jsonZ));
 
 	return l_Obstacle;
 }
 
-Obstacle Obstacle::GenCube(float a_width, float a_height, float a_length)
-{
-	Obstacle l_nvObstacle;
-	l_nvObstacle.setMesh(GenMeshCube(a_width, a_height, a_length));
-	l_nvObstacle.m_ObstacleType = E_OBSTACLE_CUBE;
-	return l_nvObstacle;
-}
-
 void Obstacle::o_draw() const
 {
-	DrawModel(m_Model, m_Position, 1, RED);
+	DrawModel(m_Model, m_Position, 1, WHITE);
 	if (m_Selected)
 	{
 		BoundingBox l_box = GetMeshBoundingBox(m_Mesh);
@@ -64,6 +83,12 @@ const Model& Obstacle::getModel()
 void Obstacle::setModel(const Model& a_model)
 {
 	m_Model = a_model;
+	m_Mesh = a_model.meshes[0];
+}
+
+void Obstacle::setModelFileName(const char* a_fileName)
+{
+	m_modelFileName = a_fileName;
 }
 
 void Obstacle::setPosition(const Vector3& a_Position)
@@ -81,4 +106,9 @@ void Obstacle::setPosition(const float a_x, const float a_y, const float a_z)
 ObstacleType Obstacle::getObstacleType()
 {
 	return m_ObstacleType;
+}
+
+bool Obstacle::operator==(const Obstacle& a_other) const
+{
+	return this == &a_other;
 }

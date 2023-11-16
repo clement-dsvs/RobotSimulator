@@ -12,9 +12,6 @@
 Map::Map(Camera* a_camera)
 {
 	m_camera = a_camera;
-
-	m_FileName = "Nouveau.json";
-	m_FilePath = nullptr;
 	m_Size = Vector2{ 10, 10 };
 }
 
@@ -24,20 +21,19 @@ void Map::o_update()
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !io.WantCaptureMouse)
 	{
-		Obstacle* l_selectedObstacle = nullptr;
 		float l_nearestHit = HUGE_VALF;
+		m_selectedObstacle = nullptr;
 
 		for (auto& l_obstacle : m_ObstacleList)
 		{
 			const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_obstacle.getMesh(), MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z));
-
 			if (l_collision.hit && l_collision.distance < l_nearestHit)
 			{
-				if (l_selectedObstacle)
+				if (m_selectedObstacle)
 				{
-					l_selectedObstacle->unselect();
+					m_selectedObstacle->unselect();
 				}
-				l_selectedObstacle = &l_obstacle;
+				m_selectedObstacle = &l_obstacle;
 				l_obstacle.select();
 				l_nearestHit = l_collision.distance;
 			}
@@ -45,6 +41,25 @@ void Map::o_update()
 			{
 				l_obstacle.unselect();
 			}
+		}
+	}
+
+	if (m_selectedObstacle)
+	{
+		if (IsKeyPressed(KEY_DELETE))
+		{
+			m_ObstacleList.erase(std::remove(m_ObstacleList.begin(), m_ObstacleList.end(), *m_selectedObstacle));
+		}
+		else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !Vector2Equals(GetMouseDelta(),Vector2Zero()))
+		{
+			Ray l_mouseRay = GetMouseRay(GetMousePosition(), *m_camera);
+			Mesh l_plane = GenMeshPlane(m_Size.x, m_Size.y, 1, 1);
+			RayCollision l_collision = GetRayCollisionMesh(l_mouseRay, l_plane, MatrixTranslate(0, 0, 0));
+			if (l_collision.hit)
+			{
+				m_selectedObstacle->setPosition(l_collision.point);
+			}
+			UnloadMesh(l_plane);
 		}
 	}
 }
@@ -60,6 +75,7 @@ void Map::o_draw() const
 Map Map::fromJSON(const char* a_FileName, Camera* a_camera)
 {
 	Map l_Map(a_camera);
+	l_Map.setFilePath(a_FileName);
 
 	// Parse JSON
 	std::ifstream file(a_FileName);
@@ -160,9 +176,13 @@ void Map::setSize(const Vector2 a_NewSize)
 	this->m_Size = a_NewSize;
 }
 
-const char* Map::getFilePath()
+void Map::updateSize()
 {
-	return this->m_FilePath;
+}
+
+std::string& Map::getFilePath()
+{
+	return m_FilePath;
 }
 
 void Map::setFilePath(const char* a_NewFilePath)

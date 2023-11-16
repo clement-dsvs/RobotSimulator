@@ -2,6 +2,7 @@
 #include "raymath.h"
 
 #include <rlImGui.h>
+#include <imgui.h>
 
 #include <string>
 
@@ -20,52 +21,52 @@ int main(int argc, char* argv[])
 	SetExitKey(KEY_NULL);
 	SetTargetFPS(144);
 	rlImGuiSetup(true);
+	//SetTraceLogLevel(LOG_WARNING);
 
-	Camera3D camera;
-    camera.position = Vector3{ 0.0f, 10.0f, 10.0f };	// Camera position
-    camera.target = Vector3{ 0.0f, 0.0f, 0.0f };		// Camera looking at point
-    camera.up = Vector3{ 0.0f, 1.0f, 0.0f };			// Camera up vector (rotation towards target)
-    camera.fovy = 45.0f;										// Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;						// Camera mode type
+	Camera3D l_camera;
+    l_camera.position = Vector3{ 0.0f, 10.0f, 10.0f };		// Camera position
+    l_camera.target = Vector3{ 0.0f, 0.0f, 0.0f };			// Camera looking at point
+    l_camera.up = Vector3{ 0.0f, 1.0f, 0.0f };				// Camera up vector (rotation towards target)
+    l_camera.fovy = 45.0f;											// Camera field-of-view Y
+    l_camera.projection = CAMERA_PERSPECTIVE;						// Camera mode type
 
-	Map map(&camera);
-	map.setSize(Vector2{ 10, 10 });
-	IHM l_ihm(&map, &camera);
+	Map l_map(&l_camera);
+	l_map.setSize(Vector2{ 10, 10 });
+	IHM l_ihm(&l_map, &l_camera);
 
-	Model model = LoadModel("C:/Users/clement/code/C++/robotsimulator/assets/obj/floor_tile_large.obj");
+	ImGuiIO& l_IO = ImGui::GetIO();
 
 	// Main loop
 	while (!WindowShouldClose())
 	{
 		// Update Camera
-		if (camera.projection == CAMERA_PERSPECTIVE)
+		if (l_camera.projection == CAMERA_PERSPECTIVE && !l_IO.WantCaptureMouse)
 		{
 			if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 			{
-				UpdateCamera(&camera, CAMERA_THIRD_PERSON);
+				UpdateCamera(&l_camera, CAMERA_THIRD_PERSON);
 			}
 			else
 			{
-				const float mouseWheelMovement = GetMouseWheelMove();
-				Vector3 mouse = Vector3Normalize(Vector3Subtract(camera.target, camera.position));
-				camera.position = Vector3Add(camera.position, Vector3Scale(mouse, mouseWheelMovement));
+				const float l_mouseWheelMovement = GetMouseWheelMove();
+				Vector3 mouse = Vector3Normalize(Vector3Subtract(l_camera.target, l_camera.position));
+				l_camera.position = Vector3Add(l_camera.position, Vector3Scale(mouse, l_mouseWheelMovement));
 			}
 		}
 
-		map.o_update();
+		l_map.o_update();
 
 		// Draw
 		BeginDrawing();
 		{
 			ClearBackground(RAYWHITE);
 
-			BeginMode3D(camera);
+			BeginMode3D(l_camera);
 			{
-				DrawGrid(map.getSize().x, 1.f);
-				DrawGrid(map.getSize().y, 1.f);
-				DrawModel(model, Vector3{ 0, 0, 0 }, 1.f, WHITE);
+				DrawGrid(static_cast<int>(l_map.getSize().x), 1.f);
+				DrawGrid(static_cast<int>(l_map.getSize().y), 1.f);
 
-				map.o_draw();
+				l_map.o_draw();
 			}
 			EndMode3D();
 

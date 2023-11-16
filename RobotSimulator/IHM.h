@@ -8,6 +8,9 @@ public:
 
 	void o_draw();
 private:
+
+	void o_listFileInDir(const char* a_path);
+
 	Map* m_map;
 	Camera* m_camera;
 

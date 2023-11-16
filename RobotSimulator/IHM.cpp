@@ -1,12 +1,14 @@
 #include "IHM.h"
 
-#include <cstdio>
+#include <filesystem>
 #include <imgui_impl_raylib.h>
 #include <iostream>
 #include <raylib.h>
 
 #include "dialogs.h"
 #include "Obstacle.h"
+
+namespace fs = std::filesystem;
 
 IHM::IHM(Map* a_map, Camera* a_camera)
 {
@@ -40,16 +42,16 @@ void IHM::o_draw()
 				if (fileName != nullptr)
 				{
 					std::cout << fileName << std::endl;
-					//m_map = Map::fromJSON(fileName);
+					*m_map = Map::fromJSON(fileName, m_camera);
 					free(fileName);
 				}
 			}
 
 			if (ImGui::MenuItem("Enregistrer"))
 			{
-				if (m_map->getFilePath())
+				if (!m_map->getFilePath().empty())
 				{
-					m_map->toJSON(m_map->getFilePath());
+					m_map->toJSON(m_map->getFilePath().c_str());
 				}
 				else
 				{
@@ -136,51 +138,10 @@ void IHM::o_draw()
 
 	if (m_afficherListeObstacles)
 	{
-		if (ImGui::Begin("Liste Obstacles", &m_afficherListeObstacles, ImGuiWindowFlags_MenuBar))
+		if (ImGui::Begin("Liste Obstacles", &m_afficherListeObstacles))
 		{
-			if (ImGui::BeginMenuBar())
-			{
-				if (ImGui::BeginMenu("Ajouter"))
-				{
-					if (ImGui::MenuItem("Cube"))
-					{
-						Obstacle l_nvObstacle = Obstacle::GenCube(2, 2, 2);
-						m_map->addObstacle(l_nvObstacle);
-					}
-
-					if (ImGui::MenuItem("Cylindre"))
-					{
-
-					}
-
-					ImGui::EndMenu();
-				}
-
-				ImGui::EndMenuBar();
-			}
-
-			int counter = 0;
-			for (auto& l_Obstacle : m_map->getObstacleList())
-			{
-				ImGui::Text("Cube");
-
-				char labelX[7];
-				char labelY[7];
-				char labelZ[7];
-				sprintf(labelX, "X##%d", counter);
-				sprintf(labelY, "Y##%d", counter);
-				sprintf(labelZ, "Z##%d", counter);
-
-				float step = .5f;
-				float fast_step = 1.f;
-
-				ImGui::InputScalar(labelX, ImGuiDataType_Float, &l_Obstacle.getPosition().x, &step, &fast_step);
-				ImGui::InputScalar(labelY, ImGuiDataType_Float, &l_Obstacle.getPosition().y, &step, &fast_step);
-				ImGui::InputScalar(labelZ, ImGuiDataType_Float, &l_Obstacle.getPosition().z, &step, &fast_step);
-
-				counter++;
-			}
-
+			const char* path = "D:/code/C/RobotSimulator/assets/models";
+			o_listFileInDir(path);
 		}
 		ImGui::End();
 	}
@@ -194,5 +155,30 @@ void IHM::o_draw()
 			ImGui::SliderFloat("Y", &m_map->getSize().y, 1, 255, "%.0f");
 		}
 		ImGui::End();
+	}
+}
+
+void IHM::o_listFileInDir(const char* a_path)
+{
+	for (const auto& l_entry : fs::directory_iterator(a_path))
+	{
+		if (l_entry.is_directory())
+		{
+			if (ImGui::CollapsingHeader(l_entry.path().filename().string().c_str()))
+			{
+				o_listFileInDir(l_entry.path().string().c_str());
+			}
+		}
+		else
+		{
+			if (ImGui::Button(l_entry.path().stem().stem().string().c_str()))
+			{
+				Model l_model = LoadModel(l_entry.path().string().c_str());
+				Obstacle l_obstacle;
+				l_obstacle.setModel(l_model);
+				l_obstacle.setModelFileName(l_entry.path().string().c_str());
+				m_map->addObstacle(l_obstacle);
+			}
+		}
 	}
 }
