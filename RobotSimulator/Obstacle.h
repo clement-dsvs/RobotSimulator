@@ -27,6 +27,7 @@ public:
 	const Mesh& getMesh();
 
 	const Model& getModel();
+	void setModel(const Model& a_model);
 
 	Vector3& getPosition() {return m_Position;}
 	void setPosition(const Vector3& a_Position);

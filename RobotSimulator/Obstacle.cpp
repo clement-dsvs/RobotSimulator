@@ -7,14 +7,13 @@
 Obstacle::Obstacle()
 {
 	this->m_Position = Vector3 {0, 0, 0};
-	Model l_model = LoadModelFromMesh(m_Mesh);
 	m_Color = RED;
 	m_Selected = false;
 }
 
 cJSON* Obstacle::toJSON()
 {
-	return NULL;
+	return nullptr;
 }
 
 Obstacle Obstacle::fromJSON(cJSON* a_jsonObstacle)
@@ -60,6 +59,11 @@ const Mesh& Obstacle::getMesh()
 const Model& Obstacle::getModel()
 {
 	return m_Model;
+}
+
+void Obstacle::setModel(const Model& a_model)
+{
+	m_Model = a_model;
 }
 
 void Obstacle::setPosition(const Vector3& a_Position)

@@ -32,6 +32,8 @@ int main(int argc, char* argv[])
 	map.setSize(Vector2{ 10, 10 });
 	IHM l_ihm(&map, &camera);
 
+	Model model = LoadModel("C:/Users/clement/code/C++/robotsimulator/assets/obj/floor_tile_large.obj");
+
 	// Main loop
 	while (!WindowShouldClose())
 	{
@@ -61,6 +63,7 @@ int main(int argc, char* argv[])
 			{
 				DrawGrid(map.getSize().x, 1.f);
 				DrawGrid(map.getSize().y, 1.f);
+				DrawModel(model, Vector3{ 0, 0, 0 }, 1.f, WHITE);
 
 				map.o_draw();
 			}
