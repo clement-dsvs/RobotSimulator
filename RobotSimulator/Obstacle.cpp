@@ -95,6 +95,10 @@ void Obstacle::setModel(const Model& a_model)
 void Obstacle::setModelFileName(const char* a_fileName)
 {
 	m_modelFileName = a_fileName;
+	if (m_modelFileName.find("floor") != std::string::npos)
+	{
+		m_ObstacleType = E_OBSTACLE_FLOOR;
+	}
 }
 
 void Obstacle::setPosition(const Vector3& a_Position)
