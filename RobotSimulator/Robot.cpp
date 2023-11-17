@@ -37,7 +37,7 @@ void Robot::o_update()
 	m_rayList.clear();
 	std::vector<std::thread> l_threadList;
 
-	for (int l_angle = 0; l_angle < m_angleScan; l_angle += m_pasAngleScan)
+	for (int l_angle = 0; l_angle <= m_angleScan; l_angle += m_pasAngleScan)
 	{
 		l_threadList.emplace_back(&Robot::o_computeRay, std::ref(*this), l_angle);
 	}
@@ -73,23 +73,18 @@ void Robot::o_computeRay(int a_angle)
 	for (Obstacle& l_obstacle : *m_obstacleList)
 	{
 		if (l_obstacle.getObstacleType() == E_OBSTACLE_FLOOR) continue;
-		try
+
+		const Model& l_model = l_obstacle.o_getModel();
+
+		const Matrix l_rotationMatrix = MatrixRotateY(DEG2RAD * static_cast<float>(l_obstacle.o_getRotation()));
+		const Matrix l_translationMatrix = MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z);
+		const Matrix l_transformMatrix = MatrixMultiply(l_rotationMatrix, l_translationMatrix);
+		const RayCollision l_tempRay = GetRayCollisionMesh(l_ray, l_model.meshes[0], l_transformMatrix);
+
+		if (l_tempRay.hit && l_tempRay.distance < l_collision.distance)
 		{
-			const Model& l_model = l_obstacle.o_getModel();
-
-			const Matrix l_rotationMatrix = MatrixRotateY(DEG2RAD * static_cast<float>(l_obstacle.o_getRotation()));
-			const Matrix l_translationMatrix = MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z);
-			const Matrix l_transformMatrix = MatrixMultiply(l_rotationMatrix, l_translationMatrix);
-			const RayCollision l_tempRay = GetRayCollisionMesh(l_ray, l_model.meshes[0], l_transformMatrix);
-
-			if (l_tempRay.hit && l_tempRay.distance < l_collision.distance)
-			{
-				l_collision = l_tempRay;
-			}
-			
+			l_collision = l_tempRay;
 		}
-		catch (...) {}
-
 	}
 
 	if (l_collision.hit)
