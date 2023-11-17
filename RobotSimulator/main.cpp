@@ -35,12 +35,13 @@ int main(int argc, char* argv[])
 	IHM l_ihm(&l_map, &l_camera);
 
 	ImGuiIO& l_IO = ImGui::GetIO();
+	//Model l_model = LoadModel("D:/code/C/RobotSimulator/assets/robot/robot.m3d");
 
 	// Main loop
 	while (!WindowShouldClose())
 	{
 		// Update Camera
-		if (l_camera.projection == CAMERA_PERSPECTIVE && !l_IO.WantCaptureMouse)
+		if (l_camera.projection == CAMERA_PERSPECTIVE && !l_IO.WantCaptureMouse && !l_map.hasSelectedObstacle())
 		{
 			if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 			{
@@ -65,6 +66,8 @@ int main(int argc, char* argv[])
 			{
 				DrawGrid(static_cast<int>(l_map.getSize().x), 1.f);
 				DrawGrid(static_cast<int>(l_map.getSize().y), 1.f);
+
+				//DrawModel(l_model, Vector3{0, 0, 0}, 1, WHITE);
 
 				l_map.o_draw();
 			}

@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#include "ModelManager.h"
 #include "utils.h"
 
 Obstacle::Obstacle()
@@ -11,13 +12,15 @@ Obstacle::Obstacle()
 	this->m_Position = Vector3 {0, 0, 0};
 	m_Color = RED;
 	m_Selected = false;
+	m_Rotation = 0;
 }
 
-cJSON* Obstacle::toJSON()
+cJSON* Obstacle::o_toJson() const
 {
 	cJSON* l_jsonObject = cJSON_CreateObject();
 
 	cJSON_AddStringToObject(l_jsonObject, "Filename", m_modelFileName.c_str());
+	cJSON_AddNumberToObject(l_jsonObject, "Rotation", m_Rotation);
 
 	cJSON* l_jsonPosition = cJSON_AddObjectToObject(l_jsonObject, "Position");
 
@@ -37,9 +40,17 @@ Obstacle Obstacle::fromJSON(const cJSON* a_jsonObstacle)
 	if (l_jsonFilename == nullptr) return l_Obstacle;
 
 	const char* l_modelFileName = cJSON_GetStringValue(l_jsonFilename);
-	Model l_model = LoadModel(l_modelFileName);
+
+	ModelManager* l_manager = ModelManager::os_GetInstance();
+	Model l_model = l_manager->o_GetModel(l_modelFileName);
 	l_Obstacle.setModel(l_model);
 	l_Obstacle.setModelFileName(l_modelFileName);
+
+	cJSON* l_jsonRotation = getJSONChild(a_jsonObstacle, "Rotation");
+	if (l_jsonRotation != nullptr)
+	{
+		l_Obstacle.m_Rotation = cJSON_GetNumberValue(l_jsonRotation);
+	}
 
 	cJSON* l_jsonPosition = getJSONChild(l_jsonObstacle, "Position");
 	cJSON* l_jsonX = getJSONChild(l_jsonPosition, "X");
@@ -54,7 +65,7 @@ Obstacle Obstacle::fromJSON(const cJSON* a_jsonObstacle)
 
 void Obstacle::o_draw() const
 {
-	DrawModel(m_Model, m_Position, 1, WHITE);
+	DrawModelEx(m_Model, m_Position, Vector3{0, 1, 0}, m_Rotation, Vector3{1, 1, 1}, WHITE);
 	if (m_Selected)
 	{
 		BoundingBox l_box = GetMeshBoundingBox(m_Mesh);
@@ -73,11 +84,6 @@ void Obstacle::setMesh(const Mesh& a_Mesh)
 const Mesh& Obstacle::getMesh()
 {
 	return m_Mesh;
-}
-
-const Model& Obstacle::getModel()
-{
-	return m_Model;
 }
 
 void Obstacle::setModel(const Model& a_model)
@@ -106,6 +112,12 @@ void Obstacle::setPosition(const float a_x, const float a_y, const float a_z)
 ObstacleType Obstacle::getObstacleType()
 {
 	return m_ObstacleType;
+}
+
+void Obstacle::o_rotate(int angle)
+{
+	m_Rotation += angle;
+	m_Rotation %= 360;
 }
 
 bool Obstacle::operator==(const Obstacle& a_other) const

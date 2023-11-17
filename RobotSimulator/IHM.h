@@ -13,9 +13,11 @@ private:
 
 	Map* m_map;
 	Camera* m_camera;
+	Robot* m_robot;
 
 	bool m_afficherListeObstacles;
 	bool m_afficherEditeurCarte;
+	bool m_afficherEditeurRobot;
 	bool m_afficherFPS;
 };
 

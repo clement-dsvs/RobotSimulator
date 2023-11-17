@@ -16,7 +16,7 @@ class Obstacle
 public:
 	Obstacle();
 
-	cJSON* toJSON();
+	cJSON* o_toJson() const;
 
 	static Obstacle fromJSON(const cJSON* a_jsonObstacle);
 
@@ -27,7 +27,7 @@ public:
 	void setMesh(const Mesh& a_Mesh);
 	const Mesh& getMesh();
 
-	const Model& getModel();
+	Model& o_getModel() { return m_Model; }
 	void setModel(const Model& a_model);
 
 	void setModelFileName(const char* a_fileName);
@@ -41,6 +41,9 @@ public:
 	void select() { m_Selected = true;}
 	void unselect() { m_Selected = false;}
 
+	void o_rotate(int angle);
+	int o_getRotation() const { return m_Rotation;}
+
 	bool operator==(const Obstacle&) const;
 
 private:
@@ -48,6 +51,8 @@ private:
 	Model m_Model;
 	std::string m_modelFileName;
 	Color m_Color;
+
+	int m_Rotation = 0;
 
 	Vector3 m_Position;
 

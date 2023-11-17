@@ -139,14 +139,18 @@
     <ClCompile Include="IHM.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dialogs.h" />
     <ClInclude Include="IHM.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="ModelManager.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Robot.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

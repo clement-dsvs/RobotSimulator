@@ -8,15 +8,18 @@
 #include <cjson/cJSON.h>
 
 #include <raymath.h>
+#include <thread>
 
 Map::Map(Camera* a_camera)
 {
 	m_camera = a_camera;
 	m_Size = Vector2{ 10, 10 };
+	m_robot = Robot(&m_ObstacleList);
 }
 
 void Map::o_update()
 {
+	m_robot.o_update();
 	const ImGuiIO& io = ImGui::GetIO();
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !io.WantCaptureMouse)
@@ -26,7 +29,11 @@ void Map::o_update()
 
 		for (auto& l_obstacle : m_ObstacleList)
 		{
-			const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_obstacle.getMesh(), MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z));
+			Matrix l_rotationMatrix = MatrixRotateY(DEG2RAD * static_cast<float>(l_obstacle.o_getRotation()));
+			Matrix l_translationMatrix = MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z);
+			Matrix l_transformMatrix = MatrixMultiply(l_rotationMatrix, l_translationMatrix);
+
+			const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_obstacle.getMesh(), l_transformMatrix);
 			if (l_collision.hit && l_collision.distance < l_nearestHit)
 			{
 				if (m_selectedObstacle)
@@ -61,6 +68,21 @@ void Map::o_update()
 			}
 			UnloadMesh(l_plane);
 		}
+		Ray l_mouseRay = GetMouseRay(GetMousePosition(), *m_camera);
+		const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), m_selectedObstacle->getMesh(), MatrixTranslate(m_selectedObstacle->getPosition().x, m_selectedObstacle->getPosition().y, m_selectedObstacle->getPosition().z));
+		if (GetMouseWheelMove() != 0.f)
+		{
+			m_selectedObstacle->o_rotate(GetMouseWheelMove());
+		}
+
+		if (l_collision.hit && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+		{
+			m_showObstacleEditWindow = !m_showObstacleEditWindow;
+		}
+	}
+	else
+	{
+		m_showObstacleEditWindow = false;
 	}
 }
 
@@ -70,12 +92,14 @@ void Map::o_draw() const
 	{
 		l_obstacle.o_draw();
 	}
+
+	m_robot.o_draw();
+
 }
 
-Map Map::fromJSON(const char* a_FileName, Camera* a_camera)
+void Map::fromJSON(const char* a_FileName, Camera* a_camera)
 {
-	Map l_Map(a_camera);
-	l_Map.setFilePath(a_FileName);
+	setFilePath(a_FileName);
 
 	// Parse JSON
 	std::ifstream file(a_FileName);
@@ -99,20 +123,20 @@ Map Map::fromJSON(const char* a_FileName, Camera* a_camera)
 		{
 			l_MapSize.y = l_jsonY->valueint;
 		}
-		l_Map.setSize(l_MapSize);
+		setSize(l_MapSize);
 	}
 
 	cJSON* l_jsonObstacleList = getJSONChild(l_jsonFile, "Obstacles");
 	cJSON* l_jsonObstacle = l_jsonObstacleList->child;
 
+	m_ObstacleList.clear();
 	while (l_jsonObstacle != nullptr)
 	{
-		l_Map.addObstacle(Obstacle::fromJSON(l_jsonObstacle));
+		addObstacle(Obstacle::fromJSON(l_jsonObstacle));
 		l_jsonObstacle = l_jsonObstacle->next;
 	}
 
 	cJSON_Delete(l_jsonFile);
-	return l_Map;
 }
 
 bool Map::toJSON(const char* a_FileName) const
@@ -131,7 +155,7 @@ bool Map::toJSON(const char* a_FileName) const
 
 	for(auto l_Obstacle : this->m_ObstacleList)
 	{
-		cJSON* l_jsonObstacle = l_Obstacle.toJSON();
+		cJSON* l_jsonObstacle = l_Obstacle.o_toJson();
 		cJSON_AddItemToArray(l_jsonListeObstacle, l_jsonObstacle);
 	}
 
@@ -188,4 +212,9 @@ std::string& Map::getFilePath()
 void Map::setFilePath(const char* a_NewFilePath)
 {
 	this->m_FilePath = a_NewFilePath;
+}
+
+bool Map::hasSelectedObstacle()
+{
+	return m_selectedObstacle != nullptr;
 }

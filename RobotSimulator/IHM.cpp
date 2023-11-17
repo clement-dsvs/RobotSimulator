@@ -13,10 +13,12 @@ namespace fs = std::filesystem;
 IHM::IHM(Map* a_map, Camera* a_camera)
 {
 	m_map = a_map;
+	m_robot = a_map->o_getRobot();
 	m_camera = a_camera;
 
 	m_afficherListeObstacles = false;
 	m_afficherEditeurCarte = false;
+	m_afficherEditeurRobot = false;
 	m_afficherFPS = false;
 }
 
@@ -42,7 +44,7 @@ void IHM::o_draw()
 				if (fileName != nullptr)
 				{
 					std::cout << fileName << std::endl;
-					*m_map = Map::fromJSON(fileName, m_camera);
+					m_map->fromJSON(fileName, m_camera);
 					free(fileName);
 				}
 			}
@@ -119,10 +121,16 @@ void IHM::o_draw()
 					m_afficherListeObstacles = !m_afficherListeObstacles;
 				}
 
-				if (ImGui::MenuItem("Editeur de carte"))
+				if (ImGui::MenuItem("Editeur de carte", NULL, m_afficherEditeurCarte))
 				{
 					m_afficherEditeurCarte = !m_afficherEditeurCarte;
 				}
+
+				if (ImGui::MenuItem("Robot", NULL, m_afficherEditeurRobot))
+				{
+					m_afficherEditeurRobot = !m_afficherEditeurRobot;
+				}
+
 				ImGui::EndMenu();
 			}
 
@@ -153,6 +161,31 @@ void IHM::o_draw()
 			ImGui::Text("Taille de la carte :");
 			ImGui::SliderFloat("X", &m_map->getSize().x, 1, 255, "%.0f");
 			ImGui::SliderFloat("Y", &m_map->getSize().y, 1, 255, "%.0f");
+		}
+		ImGui::End();
+	}
+
+	if (m_afficherEditeurRobot)
+	{
+		if (ImGui::Begin("Robot", &m_afficherEditeurRobot))
+		{
+			ImGui::InputFloat("X", &m_robot->o_getPosition().x);
+			ImGui::InputFloat("Y", &m_robot->o_getPosition().y);
+			ImGui::InputFloat("Z", &m_robot->o_getPosition().z);
+			ImGui::SliderAngle("Angle", &m_robot->o_getAngle());
+			ImGui::SliderInt("Angle Mesure", &m_robot->o_getAngleMesure(), 0, 360);
+			ImGui::SliderInt("Pas Mesure", &m_robot->o_getPasAngleMesure(), 0, 360);
+		}
+		ImGui::End();
+	}
+
+	if (m_map->o_showObstacleEditWindow())
+	{
+		if (ImGui::Begin("Editeur d'obstacle", &m_afficherEditeurCarte))
+		{
+			ImGui::InputFloat("X", &m_map->getSelectedObstacle()->getPosition().x);
+			ImGui::InputFloat("Y", &m_map->getSelectedObstacle()->getPosition().y);
+			ImGui::InputFloat("Z", &m_map->getSelectedObstacle()->getPosition().z);
 		}
 		ImGui::End();
 	}
