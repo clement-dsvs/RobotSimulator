@@ -1,6 +1,5 @@
 #include "Robot.h"
 
-#include <algorithm>
 #include <raymath.h>
 #include <thread>
 
