@@ -174,7 +174,7 @@ void IHM::o_draw()
 			ImGui::InputFloat("Z", &m_robot->o_getPosition().z);
 			ImGui::SliderAngle("Angle", &m_robot->o_getAngle());
 			ImGui::SliderInt("Angle Mesure", &m_robot->o_getAngleMesure(), 0, 360);
-			ImGui::SliderInt("Pas Mesure", &m_robot->o_getPasAngleMesure(), 1, 360);
+			ImGui::SliderInt("Pas Mesure", &m_robot->o_getPasAngleMesure(), 0, 360);
 		}
 		ImGui::End();
 	}
