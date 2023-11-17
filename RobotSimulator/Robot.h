@@ -19,6 +19,9 @@ public:
 	int& o_getPasAngleMesure() { return m_pasAngleScan; }
 
 private:
+
+	void o_computeRay(int a_angle);
+
 	Model m_model;
 	Vector3 m_Position;
 	float m_angle;

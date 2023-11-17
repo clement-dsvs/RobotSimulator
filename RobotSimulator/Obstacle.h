@@ -7,8 +7,7 @@
 enum ObstacleType
 {
 	E_OBSTACLE_UNDEFINED = -1,
-	E_OBSTACLE_CUBE = 0,
-	E_OBSTACLE_CYLINDER
+	E_OBSTACLE_FLOOR = 0,
 };
 
 class Obstacle
