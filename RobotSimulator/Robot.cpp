@@ -69,9 +69,17 @@ void Robot::o_computeRay(int a_angle)
 	l_collision.hit = false;
 	l_collision.distance = HUGE_VALF;
 
+	Vector2 l_robotOrientation{cosf(DEG2RAD * m_angle) + m_Position.x, sinf(DEG2RAD * m_angle) + m_Position.z};
+	l_robotOrientation = Vector2Normalize(l_robotOrientation);
+
 	for (Obstacle& l_obstacle : *m_obstacleList)
 	{
 		if (l_obstacle.getObstacleType() == E_OBSTACLE_FLOOR) continue;
+
+		const Vector3& l_obstaclePosition = l_obstacle.getPosition();
+		const Vector2 l_produitVectoriel = Vector2Subtract(l_robotOrientation, Vector2Normalize(Vector2{l_obstaclePosition.x, l_obstaclePosition.z}));
+
+		if (l_produitVectoriel.x * l_produitVectoriel.y > 0) continue;
 
 		const Model& l_model = l_obstacle.o_getModel();
 
