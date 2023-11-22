@@ -3,7 +3,8 @@
 #include <raymath.h>
 #include <thread>
 
-#define K_ROBOT_MODEL "D:\\code\\C\\RobotSimulator\\assets\\robot\\robot.m3d"
+//#define K_ROBOT_MODEL "D:\\code\\C\\RobotSimulator\\assets\\robot\\robot.m3d"
+#define K_ROBOT_MODEL "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\robot\\robot.m3d"
 
 Robot::Robot()
 {
@@ -33,10 +34,21 @@ void Robot::o_draw() const
 
 void Robot::o_update()
 {
+	if (m_deltaTime < 1.f/60)
+	{
+		m_deltaTime += GetFrameTime();
+		return;
+	}
+	m_deltaTime = 0;
+
 	m_rayList.clear();
 	std::vector<std::thread> l_threadList;
 
-	for (int l_angle = 0; l_angle <= m_angleScan; l_angle += m_pasAngleScan)
+	const int l_halfAngleScan = (m_angleScan / 2);
+	const int l_angleDepart = (RAD2DEG * -m_angle + 90) - l_halfAngleScan;
+	const int l_angleFin = (RAD2DEG * -m_angle + 90) + l_halfAngleScan;
+
+	for (int l_angle = l_angleDepart; l_angle <= l_angleFin; l_angle += m_pasAngleScan)
 	{
 		l_threadList.emplace_back(&Robot::o_computeRay, std::ref(*this), l_angle);
 	}
@@ -60,7 +72,6 @@ float& Robot::o_getAngle()
 
 void Robot::o_computeRay(int a_angle)
 {
-	//float l_theta = DEG2RAD * l_angle + (m_angle - m_angleScan / 2);
 	float l_theta = DEG2RAD * a_angle;
 	Ray l_ray;
 	l_ray.position = m_Position;
@@ -69,7 +80,7 @@ void Robot::o_computeRay(int a_angle)
 	l_collision.hit = false;
 	l_collision.distance = HUGE_VALF;
 
-	Vector2 l_robotOrientation{cosf(DEG2RAD * m_angle) + m_Position.x, sinf(DEG2RAD * m_angle) + m_Position.z};
+	Vector2 l_robotOrientation{cosf(m_angle) + m_Position.x, sinf(m_angle) + m_Position.z};
 	l_robotOrientation = Vector2Normalize(l_robotOrientation);
 
 	for (Obstacle& l_obstacle : *m_obstacleList)
