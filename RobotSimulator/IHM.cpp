@@ -57,7 +57,7 @@ void IHM::o_draw()
 				}
 				else
 				{
-					// TODO: remplacer par méthode "enregistrer-sous"
+					// TODO: remplacer par mÃ©thode "enregistrer-sous"
 					char* fileName = OpenExportDialog();
 					if (fileName != nullptr)
 					{
