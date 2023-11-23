@@ -57,7 +57,7 @@ void IHM::o_draw()
 				}
 				else
 				{
-					// TODO: remplacer par méthode "enregistrer-sous"
+					// TODO: remplacer par mÃ©thode "enregistrer-sous"
 					char* fileName = OpenExportDialog();
 					if (fileName != nullptr)
 					{
@@ -148,7 +148,8 @@ void IHM::o_draw()
 	{
 		if (ImGui::Begin("Liste Obstacles", &m_afficherListeObstacles))
 		{
-			const char* path = "D:/code/C/RobotSimulator/assets/models";
+			//const char* path = "D:/code/C/RobotSimulator/assets/models";
+			const char* path = "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models";
 			o_listFileInDir(path);
 		}
 		ImGui::End();
@@ -173,8 +174,8 @@ void IHM::o_draw()
 			ImGui::InputFloat("Y", &m_robot->o_getPosition().y);
 			ImGui::InputFloat("Z", &m_robot->o_getPosition().z);
 			ImGui::SliderAngle("Angle", &m_robot->o_getAngle());
-			ImGui::SliderInt("Angle Mesure", &m_robot->o_getAngleMesure(), 0, 360);
-			ImGui::SliderInt("Pas Mesure", &m_robot->o_getPasAngleMesure(), 0, 360);
+			ImGui::SliderInt("Angle Mesure", &m_robot->o_getAngleMesure(), 0, 180);
+			ImGui::SliderInt("Pas Mesure", &m_robot->o_getPasAngleMesure(), 1, 360);
 		}
 		ImGui::End();
 	}

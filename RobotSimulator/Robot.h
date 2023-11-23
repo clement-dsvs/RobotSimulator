@@ -23,8 +23,7 @@ private:
 	Vector3 m_Position;
 	float m_angle;
 
-	float m_deltaTime;
-	float previousTime;
+	float m_deltaTime = 0;
 
 	bool m_drawRays;
 
