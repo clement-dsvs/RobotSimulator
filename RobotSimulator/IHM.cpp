@@ -44,16 +44,16 @@ void IHM::o_draw()
 				if (fileName != nullptr)
 				{
 					std::cout << fileName << std::endl;
-					m_map->fromJSON(fileName, m_camera);
+					m_map->o_fromJson(fileName, m_camera);
 					free(fileName);
 				}
 			}
 
 			if (ImGui::MenuItem("Enregistrer"))
 			{
-				if (!m_map->getFilePath().empty())
+				if (!m_map->o_getFilePath().empty())
 				{
-					m_map->toJSON(m_map->getFilePath().c_str());
+					m_map->o_toJson(m_map->o_getFilePath().c_str());
 				}
 				else
 				{
@@ -62,7 +62,7 @@ void IHM::o_draw()
 					if (fileName != nullptr)
 					{
 						std::cout << fileName << std::endl;
-						m_map->toJSON(fileName);
+						m_map->o_toJson(fileName);
 						free(fileName);
 					}
 				}
@@ -74,7 +74,7 @@ void IHM::o_draw()
 				if (fileName != nullptr)
 				{
 					std::cout << fileName << std::endl;
-					m_map->toJSON(fileName);
+					m_map->o_toJson(fileName);
 					free(fileName);
 				}
 			}
@@ -148,8 +148,8 @@ void IHM::o_draw()
 	{
 		if (ImGui::Begin("Liste Obstacles", &m_afficherListeObstacles))
 		{
-			//const char* path = "D:/code/C/RobotSimulator/assets/models";
-			const char* path = "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models";
+			const char* path = "D:/code/C/RobotSimulator/assets/models";
+			//const char* path = "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models";
 			o_listFileInDir(path);
 		}
 		ImGui::End();
@@ -160,8 +160,8 @@ void IHM::o_draw()
 		if (ImGui::Begin("Editeur de carte", &m_afficherEditeurCarte))
 		{
 			ImGui::Text("Taille de la carte :");
-			ImGui::SliderFloat("X", &m_map->getSize().x, 1, 255, "%.0f");
-			ImGui::SliderFloat("Y", &m_map->getSize().y, 1, 255, "%.0f");
+			ImGui::SliderFloat("X", &m_map->o_getSize().x, 1, 255, "%.0f");
+			ImGui::SliderFloat("Y", &m_map->o_getSize().y, 1, 255, "%.0f");
 		}
 		ImGui::End();
 	}
@@ -170,12 +170,13 @@ void IHM::o_draw()
 	{
 		if (ImGui::Begin("Robot", &m_afficherEditeurRobot))
 		{
+			ImGui::Checkbox("Afficher les rayons", &m_robot->o_GetDrawRays());
 			ImGui::InputFloat("X", &m_robot->o_getPosition().x);
 			ImGui::InputFloat("Y", &m_robot->o_getPosition().y);
 			ImGui::InputFloat("Z", &m_robot->o_getPosition().z);
 			ImGui::SliderAngle("Angle", &m_robot->o_getAngle());
 			ImGui::SliderInt("Angle Mesure", &m_robot->o_getAngleMesure(), 0, 180);
-			ImGui::SliderInt("Pas Mesure", &m_robot->o_getPasAngleMesure(), 1, 360);
+			ImGui::SliderFloat("Pas Mesure", &m_robot->o_getPasAngleMesure(), 1, 360, "%.f");
 		}
 		ImGui::End();
 	}
@@ -184,9 +185,9 @@ void IHM::o_draw()
 	{
 		if (ImGui::Begin("Editeur d'obstacle", &m_afficherEditeurCarte))
 		{
-			ImGui::InputFloat("X", &m_map->getSelectedObstacle()->getPosition().x);
-			ImGui::InputFloat("Y", &m_map->getSelectedObstacle()->getPosition().y);
-			ImGui::InputFloat("Z", &m_map->getSelectedObstacle()->getPosition().z);
+			ImGui::InputFloat("X", &m_map->o_getSelectedObstacle()->getPosition().x);
+			ImGui::InputFloat("Y", &m_map->o_getSelectedObstacle()->getPosition().y);
+			ImGui::InputFloat("Z", &m_map->o_getSelectedObstacle()->getPosition().z);
 		}
 		ImGui::End();
 	}
@@ -211,7 +212,7 @@ void IHM::o_listFileInDir(const char* a_path)
 				Obstacle l_obstacle;
 				l_obstacle.setModel(l_model);
 				l_obstacle.setModelFileName(l_entry.path().string().c_str());
-				m_map->addObstacle(l_obstacle);
+				m_map->o_addObstacle(l_obstacle);
 			}
 		}
 	}

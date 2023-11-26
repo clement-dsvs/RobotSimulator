@@ -9,27 +9,26 @@
 class Map
 {
 public:
-	Map(Camera* a_camera);
+	explicit Map(Camera* a_camera);
 
 	void o_update();
 
 	void o_draw() const;
 
-	void fromJSON(const char* a_FileName, Camera* camera);
-	bool toJSON(const char* a_FileName) const;
+	void o_fromJson(const char* a_fileName, Camera* a_camera);
+	bool o_toJson(const char* a_fileName) const;
 
-	std::vector<Obstacle>& getObstacleList();
-	bool addObstacle(const Obstacle a_Obstacle);
+	std::vector<Obstacle>& o_getObstacleList();
+	bool o_addObstacle(const Obstacle& a_obstacle);
 
-	Vector2& getSize();
-	void setSize(const Vector2 a_NewSize);
-	void updateSize();
+	Vector2& o_getSize();
+	void o_setSize(const Vector2 a_newSize);
 
-	std::string& getFilePath();
-	void setFilePath(const char* a_NewFilePath);
+	std::string& o_getFilePath();
+	void o_setFilePath(const char* a_newFilePath);
 
-	bool hasSelectedObstacle();
-	Obstacle* getSelectedObstacle() { return m_selectedObstacle; }
+	bool o_hasSelectedObstacle() const;
+	Obstacle* o_getSelectedObstacle() const { return m_selectedObstacle; }
 
 	bool o_showObstacleEditWindow() const { return m_showObstacleEditWindow; }
 

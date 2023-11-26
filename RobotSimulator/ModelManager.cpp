@@ -28,6 +28,4 @@ const Model& ModelManager::o_GetModel(const std::string a_FileName)
 	return l_model;
 }
 
-ModelManager::ModelManager()
-{
-}
+ModelManager::ModelManager() = default;

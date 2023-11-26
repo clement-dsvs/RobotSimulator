@@ -34,9 +34,9 @@ cJSON* Obstacle::o_toJson() const
 Obstacle Obstacle::fromJSON(const cJSON* a_jsonObstacle)
 {
 	Obstacle l_Obstacle;
-	const cJSON* l_jsonObstacle = a_jsonObstacle;
+	//const cJSON* l_jsonObstacle = a_jsonObstacle;
 
-	cJSON* l_jsonFilename = getJSONChild(l_jsonObstacle, "Filename");
+	cJSON* l_jsonFilename = getJSONChild(a_jsonObstacle, "Filename");
 	if (l_jsonFilename == nullptr) return l_Obstacle;
 
 	const char* l_modelFileName = cJSON_GetStringValue(l_jsonFilename);
@@ -52,7 +52,7 @@ Obstacle Obstacle::fromJSON(const cJSON* a_jsonObstacle)
 		l_Obstacle.m_Rotation = cJSON_GetNumberValue(l_jsonRotation);
 	}
 
-	cJSON* l_jsonPosition = getJSONChild(l_jsonObstacle, "Position");
+	cJSON* l_jsonPosition = getJSONChild(a_jsonObstacle, "Position");
 	cJSON* l_jsonX = getJSONChild(l_jsonPosition, "X");
 	cJSON* l_jsonY = getJSONChild(l_jsonPosition, "Y");
 	cJSON* l_jsonZ = getJSONChild(l_jsonPosition, "Z");

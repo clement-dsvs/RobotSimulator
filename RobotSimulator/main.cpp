@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 	SetExitKey(KEY_NULL);
 	SetTargetFPS(144);
 	rlImGuiSetup(true);
-	//SetTraceLogLevel(LOG_WARNING);
+	SetTraceLogLevel(LOG_WARNING);
 
 	Camera3D l_camera;
     l_camera.position = Vector3{ 0.0f, 10.0f, 10.0f };		// Camera position
@@ -31,17 +31,16 @@ int main(int argc, char* argv[])
     l_camera.projection = CAMERA_PERSPECTIVE;						// Camera mode type
 
 	Map l_map(&l_camera);
-	l_map.setSize(Vector2{ 10, 10 });
+	l_map.o_setSize(Vector2{ 10, 10 });
 	IHM l_ihm(&l_map, &l_camera);
 
 	ImGuiIO& l_IO = ImGui::GetIO();
-	//Model l_model = LoadModel("D:/code/C/RobotSimulator/assets/robot/robot.m3d");
 
 	// Main loop
 	while (!WindowShouldClose())
 	{
 		// Update Camera
-		if (l_camera.projection == CAMERA_PERSPECTIVE && !l_IO.WantCaptureMouse && !l_map.hasSelectedObstacle())
+		if (l_camera.projection == CAMERA_PERSPECTIVE && !l_IO.WantCaptureMouse && !l_map.o_hasSelectedObstacle())
 		{
 			if(IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
 			{
@@ -64,10 +63,8 @@ int main(int argc, char* argv[])
 
 			BeginMode3D(l_camera);
 			{
-				DrawGrid(static_cast<int>(l_map.getSize().x), 1.f);
-				DrawGrid(static_cast<int>(l_map.getSize().y), 1.f);
-
-				//DrawModel(l_model, Vector3{0, 0, 0}, 1, WHITE);
+				DrawGrid(static_cast<int>(l_map.o_getSize().x), 1.f);
+				DrawGrid(static_cast<int>(l_map.o_getSize().y), 1.f);
 
 				l_map.o_draw();
 			}

@@ -97,49 +97,49 @@ void Map::o_draw() const
 
 }
 
-void Map::fromJSON(const char* a_FileName, Camera* a_camera)
+void Map::o_fromJson(const char* a_fileName, Camera* a_camera)
 {
-	setFilePath(a_FileName);
+	o_setFilePath(a_fileName);
 
 	// Parse JSON
-	std::ifstream file(a_FileName);
-	std::stringstream buffer;
+	const std::ifstream l_file(a_fileName);
+	std::stringstream l_buffer;
 
-	buffer << file.rdbuf();
-	std::string temp_string = buffer.str();
-	cJSON* l_jsonFile = cJSON_Parse(temp_string.c_str());
+	l_buffer << l_file.rdbuf();
+	const std::string l_tempString = l_buffer.str();
+	cJSON* l_jsonFile = cJSON_Parse(l_tempString.c_str());
 
-	cJSON* l_jsonSize = getJSONChild(l_jsonFile, "Size");
+	const cJSON* l_jsonSize = getJSONChild(l_jsonFile, "Size");
 	if (l_jsonSize != nullptr)
 	{
-		Vector2 l_MapSize;
-		cJSON* l_jsonX = getJSONChild(l_jsonSize, "X");
+		Vector2 l_MapSize{0, 0};
+		const cJSON* l_jsonX = getJSONChild(l_jsonSize, "X");
 		if (l_jsonX != nullptr)
 		{
-			l_MapSize.x = l_jsonX->valueint;
+			l_MapSize.x = static_cast<int>(l_jsonX->valueint);
 		}
 		cJSON* l_jsonY = getJSONChild(l_jsonSize, "Y");
 		if (l_jsonY != nullptr)
 		{
 			l_MapSize.y = l_jsonY->valueint;
 		}
-		setSize(l_MapSize);
+		o_setSize(l_MapSize);
 	}
 
-	cJSON* l_jsonObstacleList = getJSONChild(l_jsonFile, "Obstacles");
-	cJSON* l_jsonObstacle = l_jsonObstacleList->child;
+	const cJSON* l_jsonObstacleList = getJSONChild(l_jsonFile, "Obstacles");
+	const cJSON* l_jsonObstacle = l_jsonObstacleList->child;
 
 	m_ObstacleList.clear();
 	while (l_jsonObstacle != nullptr)
 	{
-		addObstacle(Obstacle::fromJSON(l_jsonObstacle));
+		o_addObstacle(Obstacle::fromJSON(l_jsonObstacle));
 		l_jsonObstacle = l_jsonObstacle->next;
 	}
 
 	cJSON_Delete(l_jsonFile);
 }
 
-bool Map::toJSON(const char* a_FileName) const
+bool Map::o_toJson(const char* a_fileName) const
 {
 	// Write JSON
 	cJSON* l_jsonMap = cJSON_CreateObject();
@@ -153,9 +153,9 @@ bool Map::toJSON(const char* a_FileName) const
 	cJSON* l_jsonListeObstacle = cJSON_AddArrayToObject(l_jsonMap, "Obstacles");
 	if (l_jsonListeObstacle == nullptr) return false;
 
-	for(auto l_Obstacle : this->m_ObstacleList)
+	for(const auto& l_obstacle : this->m_ObstacleList)
 	{
-		cJSON* l_jsonObstacle = l_Obstacle.o_toJson();
+		cJSON* l_jsonObstacle = l_obstacle.o_toJson();
 		cJSON_AddItemToArray(l_jsonListeObstacle, l_jsonObstacle);
 	}
 
@@ -163,7 +163,7 @@ bool Map::toJSON(const char* a_FileName) const
 
 	// Open file
 	std::ofstream l_file;
-	l_file.open(a_FileName);
+	l_file.open(a_fileName);
 	l_file << l_outputString;
 	l_file.close();
 
@@ -171,50 +171,46 @@ bool Map::toJSON(const char* a_FileName) const
 	return true;
 }
 
-std::vector<Obstacle>& Map::getObstacleList()
+std::vector<Obstacle>& Map::o_getObstacleList()
 {
 	return this->m_ObstacleList;
 }
 
-bool Map::addObstacle(const Obstacle a_Obstacle)
+bool Map::o_addObstacle(const Obstacle& a_obstacle)
 {
 	try
 	{
-		this->m_ObstacleList.push_back(a_Obstacle);
+		this->m_ObstacleList.push_back(a_obstacle);
 		return true;
 	}
-	catch (const std::exception& e)
+	catch (const std::exception& l_exception)
 	{
 		// Log error
 		return false;
 	}
 }
 
-Vector2& Map::getSize()
+Vector2& Map::o_getSize()
 {
 	return this->m_Size;
 }
 
-void Map::setSize(const Vector2 a_NewSize)
+void Map::o_setSize(const Vector2 a_newSize)
 {
-	this->m_Size = a_NewSize;
+	this->m_Size = a_newSize;
 }
 
-void Map::updateSize()
-{
-}
-
-std::string& Map::getFilePath()
+std::string& Map::o_getFilePath()
 {
 	return m_FilePath;
 }
 
-void Map::setFilePath(const char* a_NewFilePath)
+void Map::o_setFilePath(const char* a_newFilePath)
 {
-	this->m_FilePath = a_NewFilePath;
+	this->m_FilePath = a_newFilePath;
 }
 
-bool Map::hasSelectedObstacle()
+bool Map::o_hasSelectedObstacle() const
 {
 	return m_selectedObstacle != nullptr;
 }
