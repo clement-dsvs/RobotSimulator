@@ -19,70 +19,76 @@ Map::Map(Camera* a_camera)
 
 void Map::o_update()
 {
-	m_robot.o_update();
 	const ImGuiIO& io = ImGui::GetIO();
 
-	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !io.WantCaptureMouse)
+	if (m_simulationRunning)
 	{
-		float l_nearestHit = HUGE_VALF;
-		m_selectedObstacle = nullptr;
-
-		for (auto& l_obstacle : m_ObstacleList)
-		{
-			Matrix l_rotationMatrix = MatrixRotateY(DEG2RAD * static_cast<float>(l_obstacle.o_getRotation()));
-			Matrix l_translationMatrix = MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z);
-			Matrix l_transformMatrix = MatrixMultiply(l_rotationMatrix, l_translationMatrix);
-
-			const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_obstacle.getMesh(), l_transformMatrix);
-			if (l_collision.hit && l_collision.distance < l_nearestHit)
-			{
-				if (m_selectedObstacle)
-				{
-					m_selectedObstacle->unselect();
-				}
-				m_selectedObstacle = &l_obstacle;
-				l_obstacle.select();
-				l_nearestHit = l_collision.distance;
-			}
-			else
-			{
-				l_obstacle.unselect();
-			}
-		}
-	}
-
-	if (m_selectedObstacle)
-	{
-		if (IsKeyPressed(KEY_DELETE))
-		{
-			m_ObstacleList.erase(std::remove(m_ObstacleList.begin(), m_ObstacleList.end(), *m_selectedObstacle));
-		}
-		else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !Vector2Equals(GetMouseDelta(),Vector2Zero()))
-		{
-			Ray l_mouseRay = GetMouseRay(GetMousePosition(), *m_camera);
-			Mesh l_plane = GenMeshPlane(m_Size.x, m_Size.y, 1, 1);
-			RayCollision l_collision = GetRayCollisionMesh(l_mouseRay, l_plane, MatrixTranslate(0, 0, 0));
-			if (l_collision.hit)
-			{
-				m_selectedObstacle->setPosition(l_collision.point);
-			}
-			UnloadMesh(l_plane);
-		}
-		Ray l_mouseRay = GetMouseRay(GetMousePosition(), *m_camera);
-		const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), m_selectedObstacle->getMesh(), MatrixTranslate(m_selectedObstacle->getPosition().x, m_selectedObstacle->getPosition().y, m_selectedObstacle->getPosition().z));
-		if (GetMouseWheelMove() != 0.f)
-		{
-			m_selectedObstacle->o_rotate(GetMouseWheelMove());
-		}
-
-		if (l_collision.hit && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
-		{
-			m_showObstacleEditWindow = !m_showObstacleEditWindow;
-		}
+		m_robot.o_update();
 	}
 	else
 	{
-		m_showObstacleEditWindow = false;
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !io.WantCaptureMouse)
+		{
+			float l_nearestHit = HUGE_VALF;
+			m_selectedObstacle = nullptr;
+
+			for (auto& l_obstacle : m_ObstacleList)
+			{
+				Matrix l_rotationMatrix = MatrixRotateY(DEG2RAD * static_cast<float>(l_obstacle.o_getRotation()));
+				Matrix l_translationMatrix = MatrixTranslate(l_obstacle.getPosition().x, l_obstacle.getPosition().y, l_obstacle.getPosition().z);
+				Matrix l_transformMatrix = MatrixMultiply(l_rotationMatrix, l_translationMatrix);
+
+				const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), l_obstacle.getMesh(), l_transformMatrix);
+				if (l_collision.hit && l_collision.distance < l_nearestHit)
+				{
+					if (m_selectedObstacle)
+					{
+						m_selectedObstacle->unselect();
+					}
+					m_selectedObstacle = &l_obstacle;
+					l_obstacle.select();
+					l_nearestHit = l_collision.distance;
+				}
+				else
+				{
+					l_obstacle.unselect();
+				}
+			}
+		}
+
+		if (m_selectedObstacle)
+		{
+			if (IsKeyPressed(KEY_DELETE))
+			{
+				m_ObstacleList.erase(std::remove(m_ObstacleList.begin(), m_ObstacleList.end(), *m_selectedObstacle));
+			}
+			else if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && !Vector2Equals(GetMouseDelta(),Vector2Zero()))
+			{
+				Ray l_mouseRay = GetMouseRay(GetMousePosition(), *m_camera);
+				Mesh l_plane = GenMeshPlane(m_Size.x, m_Size.y, 1, 1);
+				RayCollision l_collision = GetRayCollisionMesh(l_mouseRay, l_plane, MatrixTranslate(0, 0, 0));
+				if (l_collision.hit)
+				{
+					m_selectedObstacle->setPosition(l_collision.point);
+				}
+				UnloadMesh(l_plane);
+			}
+			Ray l_mouseRay = GetMouseRay(GetMousePosition(), *m_camera);
+			const RayCollision l_collision = GetRayCollisionMesh(GetMouseRay(GetMousePosition(), *m_camera), m_selectedObstacle->getMesh(), MatrixTranslate(m_selectedObstacle->getPosition().x, m_selectedObstacle->getPosition().y, m_selectedObstacle->getPosition().z));
+			if (GetMouseWheelMove() != 0.f)
+			{
+				m_selectedObstacle->o_rotate(GetMouseWheelMove());
+			}
+
+			if (l_collision.hit && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+			{
+				m_showObstacleEditWindow = !m_showObstacleEditWindow;
+			}
+		}
+		else
+		{
+			m_showObstacleEditWindow = false;
+		}
 	}
 }
 
@@ -213,4 +219,14 @@ void Map::o_setFilePath(const char* a_newFilePath)
 bool Map::o_hasSelectedObstacle() const
 {
 	return m_selectedObstacle != nullptr;
+}
+
+void Map::o_startSimulation()
+{
+	m_simulationRunning = true;
+}
+
+void Map::o_stopSimulation()
+{
+	m_simulationRunning = false;
 }

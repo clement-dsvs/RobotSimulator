@@ -7,6 +7,7 @@
 
 #include "dialogs.h"
 #include "Obstacle.h"
+#include "rlImGui.h"
 
 namespace fs = std::filesystem;
 
@@ -20,6 +21,7 @@ IHM::IHM(Map* a_map, Camera* a_camera)
 	m_afficherEditeurCarte = false;
 	m_afficherEditeurRobot = false;
 	m_afficherFPS = false;
+	m_robotViewTexture = { 0 };
 }
 
 void IHM::o_draw()
@@ -84,12 +86,17 @@ void IHM::o_draw()
 
 		if (ImGui::BeginMenu("Simulation"))
 		{
-			if (ImGui::MenuItem("Commencer"))
+			if (ImGui::MenuItem("Commencer", nullptr, false, !m_map->o_isSimulationRunning()))
 			{
-
+				m_map->o_startSimulation();
 			}
 
-			if (ImGui::MenuItem("Arreter"))
+			if (ImGui::MenuItem("Arreter", nullptr, false, m_map->o_isSimulationRunning()))
+			{
+				m_map->o_stopSimulation();
+			}
+
+			if (ImGui::MenuItem("Recommencer"))
 			{
 
 			}
@@ -131,6 +138,11 @@ void IHM::o_draw()
 					m_afficherEditeurRobot = !m_afficherEditeurRobot;
 				}
 
+				if (ImGui::MenuItem("Vue du robot", NULL, m_afficherVueRobot))
+				{
+					m_afficherVueRobot = !m_afficherVueRobot;
+				}
+
 				ImGui::EndMenu();
 			}
 
@@ -170,16 +182,19 @@ void IHM::o_draw()
 	{
 		if (ImGui::Begin("Robot", &m_afficherEditeurRobot))
 		{
-			ImGui::Checkbox("Afficher les rayons", &m_robot->o_GetDrawRays());
+			ImGui::Checkbox("Afficher les rayons", &m_robot->o_getDrawRays());
 			ImGui::InputFloat("X", &m_robot->o_getPosition().x);
 			ImGui::InputFloat("Y", &m_robot->o_getPosition().y);
 			ImGui::InputFloat("Z", &m_robot->o_getPosition().z);
 			ImGui::SliderAngle("Angle", &m_robot->o_getAngle());
 			ImGui::SliderInt("Angle Mesure", &m_robot->o_getAngleMesure(), 0, 180);
 			ImGui::SliderFloat("Pas Mesure", &m_robot->o_getPasAngleMesure(), 1, 360, "%.f");
+			ImGui::InputFloat("Vitesse", &m_robot->o_getVelocity());
 		}
 		ImGui::End();
 	}
+
+	if (m_afficherVueRobot) o_afficherVueRobot();
 
 	if (m_map->o_showObstacleEditWindow())
 	{
@@ -216,4 +231,45 @@ void IHM::o_listFileInDir(const char* a_path)
 			}
 		}
 	}
+}
+
+float Lerp(float a, float b, float t)
+{
+	return (1.0f - t) * a + b * t;
+}
+
+float InvLerp(float a, float b, float v)
+{
+	return (v - a) / (b - a);
+}
+
+float mapValue(const float a_input, const float a_inputMin, const float a_inputMax, const float a_outputMin, const float a_outputMax)
+{
+	float t = InvLerp(a_inputMin, a_inputMax, a_input);
+	return Lerp(a_outputMin, a_outputMax, t);
+}
+
+void IHM::o_afficherVueRobot()
+{
+	if (ImGui::Begin("Vue robot", &m_afficherVueRobot))
+	{
+		Image l_image = GenImageColor(m_map->o_getSize().x, m_map->o_getSize().y, RAYWHITE);
+
+		for(const auto& l_collision : m_robot->o_getRayList())
+		{
+			//const float l_x = mapValue(l_collision.point.x, -(m_map->o_getSize().x/2), m_map->o_getSize().x/2, 0, l_image.width);
+			//const float l_y = mapValue(l_collision.point.y, -(m_map->o_getSize().y/2), m_map->o_getSize().y/2, 0, l_image.height);
+			const float l_x = l_collision.point.x;
+			const float l_y = l_collision.point.y;
+
+			ImageDrawPixel(&l_image, l_y, l_x, BLUE);
+		}
+		m_robotViewTexture = LoadTextureFromImage(l_image);
+
+		//UnloadImage(l_image);
+
+		rlImGuiImageSize(&m_robotViewTexture, 300, 300);
+
+	}
+	ImGui::End();
 }

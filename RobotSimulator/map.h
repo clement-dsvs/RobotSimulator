@@ -31,6 +31,9 @@ public:
 	Obstacle* o_getSelectedObstacle() const { return m_selectedObstacle; }
 
 	bool o_showObstacleEditWindow() const { return m_showObstacleEditWindow; }
+	bool o_isSimulationRunning() const { return m_simulationRunning; }
+	void o_startSimulation();
+	void o_stopSimulation();
 
 	Robot* o_getRobot() { return &m_robot; }
 
@@ -40,6 +43,7 @@ private:
 	std::string m_FilePath;
 
 	bool m_showObstacleEditWindow = false;
+	bool m_simulationRunning = false;
 
 	Camera* m_camera;
 	Obstacle* m_selectedObstacle = nullptr;

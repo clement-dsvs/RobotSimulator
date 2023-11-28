@@ -15,9 +15,15 @@ private:
 	Camera* m_camera;
 	Robot* m_robot;
 
+	Image m_robotView;
+	Texture m_robotViewTexture;
+
 	bool m_afficherListeObstacles;
 	bool m_afficherEditeurCarte;
 	bool m_afficherEditeurRobot;
+	bool m_afficherVueRobot;
 	bool m_afficherFPS;
+
+	void o_afficherVueRobot();
 };
 

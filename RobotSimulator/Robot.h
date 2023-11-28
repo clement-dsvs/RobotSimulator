@@ -18,15 +18,22 @@ public:
 	int& o_getAngleMesure() { return m_angleScan; }
 	float& o_getPasAngleMesure() { return m_pasAngleScan; }
 
-	bool& o_GetDrawRays() { return m_drawRays; }
+	float& o_getVelocity() { return m_velocity; }
+
+	bool& o_getDrawRays() { return m_drawRays; }
+
+	const std::vector<RayCollision>& o_getRayList() { return m_rayList; }
 
 private:
 
-	void o_computeRay(int a_angle);
+	void o_computeRay(float a_angle);
 
 	Model m_model;
 	Vector3 m_position;
 	float m_angle;
+
+	float m_velocity;
+	float m_maxVelocity = .5f;
 
 	float m_deltaTime = 0;
 
@@ -34,6 +41,8 @@ private:
 
 	int m_angleScan;
 	float m_pasAngleScan;
+
+	float m_distanceMinCollision = 0.5f;
 
 	std::vector<Obstacle>* m_obstacleList;
 	std::vector<RayCollision> m_rayList;

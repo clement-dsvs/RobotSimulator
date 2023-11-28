@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 	SetExitKey(KEY_NULL);
 	SetTargetFPS(144);
 	rlImGuiSetup(true);
-	SetTraceLogLevel(LOG_WARNING);
+	//SetTraceLogLevel(LOG_WARNING);
 
 	Camera3D l_camera;
     l_camera.position = Vector3{ 0.0f, 10.0f, 10.0f };		// Camera position
