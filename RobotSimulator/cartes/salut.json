@@ -1,0 +1,911 @@
+{
+	"Size":	{
+		"X":	30,
+		"Y":	30
+	},
+	"Obstacles":	[{
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-13,
+				"Y":	0,
+				"Z":	-13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-9,
+				"Y":	0,
+				"Z":	-13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-5,
+				"Y":	0,
+				"Z":	-13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-1,
+				"Y":	0,
+				"Z":	-13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	3,
+				"Y":	0,
+				"Z":	-13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7,
+				"Y":	0,
+				"Z":	-13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	-13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	-14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	-12
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-13,
+				"Y":	0,
+				"Z":	-9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-9,
+				"Y":	0,
+				"Z":	-9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-5,
+				"Y":	0,
+				"Z":	-9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-1,
+				"Y":	0,
+				"Z":	-9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	3,
+				"Y":	0,
+				"Z":	-9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7,
+				"Y":	0,
+				"Z":	-9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	-9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	-10
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	-8
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-13,
+				"Y":	0,
+				"Z":	-5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-9,
+				"Y":	0,
+				"Z":	-5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-5,
+				"Y":	0,
+				"Z":	-5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-1,
+				"Y":	0,
+				"Z":	-5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	3,
+				"Y":	0,
+				"Z":	-5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7,
+				"Y":	0,
+				"Z":	-5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	-5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	-6
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	-4
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-13,
+				"Y":	0,
+				"Z":	-1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-9,
+				"Y":	0,
+				"Z":	-1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-5,
+				"Y":	0,
+				"Z":	-1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-1,
+				"Y":	0,
+				"Z":	-1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	3,
+				"Y":	0,
+				"Z":	-1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7,
+				"Y":	0,
+				"Z":	-1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	-1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	-2
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	0
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-13,
+				"Y":	0,
+				"Z":	3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-9,
+				"Y":	0,
+				"Z":	3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-5,
+				"Y":	0,
+				"Z":	3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-1,
+				"Y":	0,
+				"Z":	3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	3,
+				"Y":	0,
+				"Z":	3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7,
+				"Y":	0,
+				"Z":	3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	2
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	4
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-13,
+				"Y":	0,
+				"Z":	7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-9,
+				"Y":	0,
+				"Z":	7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-5,
+				"Y":	0,
+				"Z":	7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-1,
+				"Y":	0,
+				"Z":	7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	3,
+				"Y":	0,
+				"Z":	7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7,
+				"Y":	0,
+				"Z":	7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	6
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	8
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-13,
+				"Y":	0,
+				"Z":	11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-9,
+				"Y":	0,
+				"Z":	11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-5,
+				"Y":	0,
+				"Z":	11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-1,
+				"Y":	0,
+				"Z":	11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	3,
+				"Y":	0,
+				"Z":	11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7,
+				"Y":	0,
+				"Z":	11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	10
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	12
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-14,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-12,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-10,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-8,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-6,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-4,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-2,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	0,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	2,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	4,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	6,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	8,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	10,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	12,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\floors\\floor_wood_small.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	14,
+				"Y":	0,
+				"Z":	14
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_corner.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_corner.gltf.glb",
+			"Rotation":	-90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_corner.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_corner.gltf.glb",
+			"Rotation":	180,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-11,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-7,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-3,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	1,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	5,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	9,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_half.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	-15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	-11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	-7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	-3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_half.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	15,
+				"Y":	0,
+				"Z":	13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	-11
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	-7
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	-3
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	1
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	5
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	9
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_half.gltf.glb",
+			"Rotation":	90,
+			"Position":	{
+				"X":	-15,
+				"Y":	0,
+				"Z":	13
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-11,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-7,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-3,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	1,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	5,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	9,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\walls\\wall_half.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	11,
+				"Y":	0,
+				"Z":	15
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\boxes\\box_large.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	-2.7406439781188965,
+				"Y":	4.76837158203125e-07,
+				"Z":	4.2587366104125977
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\boxes\\box_large.gltf.glb",
+			"Rotation":	-1,
+			"Position":	{
+				"X":	7.3264336585998535,
+				"Y":	3.814697265625e-06,
+				"Z":	7.57369041442871
+			}
+		}, {
+			"Filename":	"C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models\\props\\tables\\table_medium.gltf.glb",
+			"Rotation":	0,
+			"Position":	{
+				"X":	7.67290449142456,
+				"Y":	-1.9073486328125e-06,
+				"Z":	-5.19936180114746
+			}
+		}]
+}
