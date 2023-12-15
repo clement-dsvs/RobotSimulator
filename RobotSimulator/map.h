@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include <raylib.h>
 #include <string>
@@ -6,6 +7,9 @@
 #include "Obstacle.h"
 #include "Robot.h"
 
+/**
+ * \brief 
+ */
 class Map
 {
 public:
@@ -22,20 +26,20 @@ public:
 	bool o_addObstacle(const Obstacle& a_obstacle);
 
 	Vector2& o_getSize();
-	void o_setSize(const Vector2 a_newSize);
+	void o_setSize(Vector2 a_newSize);
 
 	std::string& o_getFilePath();
 	void o_setFilePath(const char* a_newFilePath);
 
 	bool o_hasSelectedObstacle() const;
-	Obstacle* o_getSelectedObstacle() const { return m_selectedObstacle; }
+	Obstacle* o_getSelectedObstacle() const;
 
-	bool o_showObstacleEditWindow() const { return m_showObstacleEditWindow; }
-	bool o_isSimulationRunning() const { return m_simulationRunning; }
+	bool o_showObstacleEditWindow() const;
+	bool o_isSimulationRunning() const;
 	void o_startSimulation();
 	void o_stopSimulation();
 
-	Robot* o_getRobot() { return &m_robot; }
+	Robot* o_getRobot();
 
 private:
 	std::vector<Obstacle> m_ObstacleList;

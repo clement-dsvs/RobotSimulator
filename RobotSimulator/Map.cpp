@@ -221,6 +221,21 @@ bool Map::o_hasSelectedObstacle() const
 	return m_selectedObstacle != nullptr;
 }
 
+Obstacle* Map::o_getSelectedObstacle() const
+{
+	return m_selectedObstacle;
+}
+
+bool Map::o_showObstacleEditWindow() const
+{
+	return m_showObstacleEditWindow;
+}
+
+bool Map::o_isSimulationRunning() const
+{
+	return m_simulationRunning;
+}
+
 void Map::o_startSimulation()
 {
 	m_simulationRunning = true;
@@ -229,4 +244,9 @@ void Map::o_startSimulation()
 void Map::o_stopSimulation()
 {
 	m_simulationRunning = false;
+}
+
+Robot* Map::o_getRobot()
+{
+	return &m_robot;
 }

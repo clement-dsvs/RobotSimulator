@@ -6,8 +6,8 @@
 
 #include <string>
 
-#include "IHM.h"
 #include "Map.h"
+#include "IHM.h"
 
 int main(int argc, char* argv[])
 {
@@ -69,6 +69,8 @@ int main(int argc, char* argv[])
 				l_map.o_draw();
 			}
 			EndMode3D();
+
+			l_ihm.o_drawRenderTexture();
 
 			rlImGuiBegin();
 			{

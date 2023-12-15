@@ -6,6 +6,7 @@
 class Robot
 {
 public:
+
 	Robot();
 	explicit Robot(std::vector<Obstacle>* a_obstacleList);
 
@@ -23,6 +24,8 @@ public:
 	bool& o_getDrawRays() { return m_drawRays; }
 
 	const std::vector<RayCollision>& o_getRayList() { return m_rayList; }
+
+	Vector2 o_getSize();
 
 private:
 

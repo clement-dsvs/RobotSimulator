@@ -5,8 +5,8 @@
 
 #include "C_RayCollision.h"
 
-#define K_ROBOT_MODEL "D:\\code\\C\\RobotSimulator\\assets\\robot\\robot.m3d"
-//#define K_ROBOT_MODEL "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\robot\\robot.m3d"
+//#define K_ROBOT_MODEL "D:\\code\\C\\RobotSimulator\\assets\\robot\\robot.m3d"
+#define K_ROBOT_MODEL "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\robot\\robot.m3d"
 
 Robot::Robot() : Robot(nullptr)
 {
@@ -86,7 +86,7 @@ void Robot::o_update()
 
 			const float l_prodVectoriel = (l_robot.x * l_point.x) - (l_robot.y * l_point.y);
 
-			if (l_prodVectoriel > 0)
+			if (l_prodVectoriel < 0)
 			{
 				m_angle -= PI / 6;
 			}
@@ -114,6 +114,15 @@ Vector3& Robot::o_getPosition()
 float& Robot::o_getAngle()
 {
 	return m_angle;
+}
+
+Vector2 Robot::o_getSize()
+{
+	BoundingBox l_bb = GetModelBoundingBox(m_model);
+	Vector2 l_size;
+	l_size.x = std::abs(l_bb.max.x - l_bb.min.x);
+	l_size.y = std::abs(l_bb.max.z - l_bb.min.z);
+	return l_size;
 }
 
 void Robot::o_computeRay(const float a_angle)

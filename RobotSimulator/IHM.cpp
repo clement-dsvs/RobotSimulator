@@ -21,7 +21,18 @@ IHM::IHM(Map* a_map, Camera* a_camera)
 	m_afficherEditeurCarte = false;
 	m_afficherEditeurRobot = false;
 	m_afficherFPS = false;
-	m_robotViewTexture = { 0 };
+
+	m_orthographicCamera = Camera3D{
+		Vector3{ 0, 10.f, .1f },
+		Vector3{0, 0, 0},
+		Vector3{0, 1, 0},
+		45.f,
+		CAMERA_ORTHOGRAPHIC
+	};
+
+	o_updateMiniMaps();
+
+	m_renderTexture = LoadRenderTexture(1920, 1080);
 }
 
 void IHM::o_draw()
@@ -47,6 +58,7 @@ void IHM::o_draw()
 				{
 					std::cout << fileName << std::endl;
 					m_map->o_fromJson(fileName, m_camera);
+					o_updateMiniMaps();
 					free(fileName);
 				}
 			}
@@ -143,6 +155,11 @@ void IHM::o_draw()
 					m_afficherVueRobot = !m_afficherVueRobot;
 				}
 
+				if (ImGui::MenuItem("Progression", NULL, m_afficherProgression))
+				{
+					m_afficherProgression = !m_afficherProgression;
+				}
+
 				ImGui::EndMenu();
 			}
 
@@ -160,8 +177,8 @@ void IHM::o_draw()
 	{
 		if (ImGui::Begin("Liste Obstacles", &m_afficherListeObstacles))
 		{
-			const char* path = "D:/code/C/RobotSimulator/assets/models";
-			//const char* path = "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models";
+			//const char* path = "D:/code/C/RobotSimulator/assets/models";
+			const char* path = "C:\\Users\\clement\\code\\C++\\robotsimulator\\assets\\models";
 			o_listFileInDir(path);
 		}
 		ImGui::End();
@@ -172,8 +189,14 @@ void IHM::o_draw()
 		if (ImGui::Begin("Editeur de carte", &m_afficherEditeurCarte))
 		{
 			ImGui::Text("Taille de la carte :");
-			ImGui::SliderFloat("X", &m_map->o_getSize().x, 1, 255, "%.0f");
-			ImGui::SliderFloat("Y", &m_map->o_getSize().y, 1, 255, "%.0f");
+			bool change = false;
+			change |= ImGui::SliderFloat("X", &m_map->o_getSize().x, 1, 255, "%.0f");
+			change |= ImGui::SliderFloat("Y", &m_map->o_getSize().y, 1, 255, "%.0f");
+
+			if (change)
+			{
+				o_updateMiniMaps();
+			}
 		}
 		ImGui::End();
 	}
@@ -196,6 +219,8 @@ void IHM::o_draw()
 
 	if (m_afficherVueRobot) o_afficherVueRobot();
 
+	if (m_afficherProgression) o_afficherProgression();
+
 	if (m_map->o_showObstacleEditWindow())
 	{
 		if (ImGui::Begin("Editeur d'obstacle", &m_afficherEditeurCarte))
@@ -206,6 +231,32 @@ void IHM::o_draw()
 		}
 		ImGui::End();
 	}
+}
+
+void IHM::o_drawRenderTexture()
+{
+	BeginTextureMode(m_renderTexture);
+	BeginMode3D(m_orthographicCamera);
+
+	m_map->o_draw();
+
+	EndMode3D();
+	EndTextureMode();
+}
+
+void IHM::o_updateMiniMaps()
+{
+	UnloadImage(m_robotView);
+	UnloadTexture(m_robotViewTexture);
+
+	m_robotView = GenImageColor(m_map->o_getSize().x, m_map->o_getSize().x, WHITE);
+	m_robotViewTexture = LoadTextureFromImage(m_robotView);
+
+	UnloadImage(m_progressionImage);
+	UnloadTexture(m_progressionTexture);
+
+	m_progressionImage = GenImageColor(m_map->o_getSize().x * 10, m_map->o_getSize().x * 10, Color{255, 255, 255, 0});
+	m_progressionTexture = LoadTextureFromImage(m_progressionImage);
 }
 
 void IHM::o_listFileInDir(const char* a_path)
@@ -253,23 +304,47 @@ void IHM::o_afficherVueRobot()
 {
 	if (ImGui::Begin("Vue robot", &m_afficherVueRobot))
 	{
-		Image l_image = GenImageColor(m_map->o_getSize().x, m_map->o_getSize().y, RAYWHITE);
-
 		for(const auto& l_collision : m_robot->o_getRayList())
 		{
-			//const float l_x = mapValue(l_collision.point.x, -(m_map->o_getSize().x/2), m_map->o_getSize().x/2, 0, l_image.width);
-			//const float l_y = mapValue(l_collision.point.y, -(m_map->o_getSize().y/2), m_map->o_getSize().y/2, 0, l_image.height);
-			const float l_x = l_collision.point.x;
-			const float l_y = l_collision.point.y;
+			const float l_x = mapValue(l_collision.point.x, -(m_map->o_getSize().x/2), m_map->o_getSize().x/2, 0, m_robotView.width);
+			const float l_y = mapValue(l_collision.point.z, -(m_map->o_getSize().y/2), m_map->o_getSize().y/2, 0, m_robotView.height);
+			//const float l_x = l_collision.point.x;
+			//const float l_y = l_collision.point.y;
 
-			ImageDrawPixel(&l_image, l_y, l_x, BLUE);
+			ImageDrawPixel(&m_robotView, l_y, l_x, BLUE);
 		}
-		m_robotViewTexture = LoadTextureFromImage(l_image);
-
-		//UnloadImage(l_image);
+		UpdateTexture(m_robotViewTexture, m_robotView.data);
 
 		rlImGuiImageSize(&m_robotViewTexture, 300, 300);
 
 	}
 	ImGui::End();
 }
+
+void IHM::o_afficherProgression()
+{
+	if (ImGui::Begin("Progression", &m_afficherProgression))
+	{
+		Vector2 l_robotSize = m_robot->o_getSize();
+		const float l_x = mapValue(m_robot->o_getPosition().x, -(m_map->o_getSize().x/2), m_map->o_getSize().x/2, 0, m_progressionImage.width);
+		const float l_y = mapValue(m_robot->o_getPosition().z, -(m_map->o_getSize().y/2), m_map->o_getSize().y/2, 0, m_progressionImage.height);
+		ImageDrawCircle(&m_progressionImage, l_x, l_y, 3, GREEN);
+		UpdateTexture(m_progressionTexture, m_progressionImage.data);
+
+		rlImGuiImageSize(&m_progressionTexture, 300, 300);
+
+		ImVec2 size = ImGui::GetContentRegionAvail();
+
+		Rectangle viewRect = {  };
+		viewRect.x = m_renderTexture.texture.width / 2 - size.x / 2;
+		viewRect.y = m_renderTexture.texture.height / 2 - size.y / 2;
+		viewRect.width = size.x;
+		viewRect.height = -size.y;
+
+		//rlImGuiImageRect(&m_renderTexture.texture, size.x, size.y, viewRect);
+		rlImGuiImageRenderTextureFit(&m_renderTexture, true);
+
+	}
+	ImGui::End();
+}
+
